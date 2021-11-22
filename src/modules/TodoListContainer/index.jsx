@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import TodoList from "../../components/TodoList";
+// import TodoList from "../../components/TodoList";
+import ListContainer from  "../../components/ListContainer";
 
 class TodoListContainer extends Component {
   constructor(props) {
@@ -26,7 +27,8 @@ class TodoListContainer extends Component {
   render() {
     const { list } = this.state;
     return (
-      <TodoList list={list} />
+      // <TodoList list={list} />
+      <ListContainer list={list} />
     )
   }
 }
