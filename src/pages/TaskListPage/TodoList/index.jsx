@@ -1,10 +1,10 @@
 import React from 'react';
+import { Container, Divider, List, Paper } from '@mui/material';
 // import Timer from '../Timer';
-import Timer from '../TimerFunction';
+import Timer from 'Components/TimerFunction';
 import TodoListItem from '../TodoListItem';
 import FormAddTask from '../FormAddTask';
-import { Container, Divider, List, Paper, Switch } from '@mui/material';
-import Toggle from '../Toggle';
+import Toggle from 'Components/Toggle';
 
 /*
 * class based component
