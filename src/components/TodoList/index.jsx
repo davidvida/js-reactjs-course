@@ -27,7 +27,7 @@ class TodoList extends React.Component {
           { !hideTimer && <Timer /> }
 
         </div> */}
-        <FormAddTask onSubmitCallback={performAddTask} />
+        {/* <FormAddTask onSubmitCallback={performAddTask} /> */}
         <Toggle active={filterApplied} label="Hide completed" onToggle={toggleListItem} />
         <Paper>
           <List>

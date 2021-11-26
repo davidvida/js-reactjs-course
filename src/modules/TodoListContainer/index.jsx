@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import TodoList from "../../components/TodoList";
+import DialogForm from "../../components/Dialog";
+import FormAddTask from '../../components/FormAddTask';
+
 
 class TodoListContainer extends Component {
   constructor(props) {
@@ -58,6 +61,10 @@ class TodoListContainer extends Component {
   render() {
     const { list, filterApplied } = this.state;
     return (
+      <>
+      <DialogForm addTask={this.performAddTask} >
+        <FormAddTask />
+      </DialogForm>
       <TodoList
         list={list}
         filterApplied={filterApplied}
@@ -65,6 +72,7 @@ class TodoListContainer extends Component {
         toggleListItem={this.toggleListItem}
         performAddTask={this.performAddTask}
       />
+      </>
     )
   }
 }
