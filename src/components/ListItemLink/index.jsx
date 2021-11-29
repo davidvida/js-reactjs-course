@@ -2,11 +2,13 @@
 // use useNavigation for redirect
 import React from "react";
 import { ListItem, ListItemIcon, ListItemText } from "@mui/material";
+import { useNavigate } from 'react-router-dom';
 
 const ListItemLink = ({ to, label, icon }) => {
-
-  const handleClick = () => {
-    // logic to redirect
+  let navigate = useNavigate();
+  const handleClick = (event) => {
+    event.preventDefault();
+    navigate(to);
   }
 
   return (
