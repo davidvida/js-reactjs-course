@@ -1,13 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
+import { TextField, Button, Dialog, DialogContent, DialogTitle, DialogActions } from '@mui/material';
 
 const FormAddTask = ({ onSubmitCallback }) => {
   const [taskName, setTaskName] = useState("");
-  const inputRef = useRef();
+   const [open, setOpen] = React.useState(false);
 
-  useEffect(() => {
-    inputRef.current.focus();
-  }, []);
-
+  
   const onChangeName = (event) => {
     setTaskName(event.target.value);
   }
@@ -18,26 +16,44 @@ const FormAddTask = ({ onSubmitCallback }) => {
       name: taskName
     });
     setTaskName("");
+    setOpen(false);
+  };
+  const handleClickOpen = () => {
+    setOpen(true);
   };
 
+  const handleClose = () => {
+    setOpen(false);
+  };
+  // main -> feature/david-mamani_dialog
   return (
-    <form onSubmit={onSubmitListener}>
-      <div>
-        <label htmlFor="taskName">Task Name</label>
-        <input
-          type="text"
-          id="taskName"
-          name="name"
-          autoComplete="off"
-          ref={inputRef}
-          value={taskName}
-          onChange={onChangeName} />
-      </div>
-      <div>
-        <button type="submit" id="submitForm">
-          Add Task
-        </button>
-      </div>
+    <form >
+        <Button variant="outlined" onClick={handleClickOpen}>
+          Add New Task
+        </Button>
+        <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Add New Task</DialogTitle>
+        <DialogContent>
+        <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="Task Name"
+            type="email"
+            fullWidth
+            variant="standard"
+            id="taskName"
+            name="name"
+            autoComplete="off"
+            value={taskName}
+            onChange={onChangeName}
+        />
+        </DialogContent>
+      <DialogActions>
+        <Button onClick={handleClose}>Cancel</Button>
+        <Button onClick={onSubmitListener} >Add Task</Button>
+      </DialogActions>
+      </Dialog>
     </form>
   );
 };
