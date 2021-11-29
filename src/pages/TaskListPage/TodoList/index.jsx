@@ -33,10 +33,10 @@ class TodoList extends React.Component {
           <List>
           {list.filter(item => (!filterApplied ? true : !item.completed)).map((item, index, array) => {
             return (
-              <>
-                <TodoListItem key={item.id} completed={item.completed} name={item.name} />
+              <React.Fragment key={item.id}  >
+                <TodoListItem completed={item.completed} name={item.name} />
                 { index < array.length -1  && <Divider /> }
-              </>
+              </React.Fragment>
             )
           })}
           </List>
