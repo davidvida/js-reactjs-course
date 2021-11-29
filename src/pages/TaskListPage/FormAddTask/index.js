@@ -1,44 +1,65 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
 
 const FormAddTask = ({ onSubmitCallback }) => {
   const [taskName, setTaskName] = useState("");
-  const inputRef = useRef();
-
-  useEffect(() => {
-    inputRef.current.focus();
-  }, []);
-
+  const [open, setOpen] = React.useState(false);
   const onChangeName = (event) => {
     setTaskName(event.target.value);
-  }
+  };
 
   const onSubmitListener = (event) => {
     event.preventDefault();
-    onSubmitCallback({
-      name: taskName
-    });
-    setTaskName("");
+    if (taskName !== "") {
+      onSubmitCallback({
+        name: taskName,
+      });
+      setTaskName("");
+    } else {
+      alert("The task name shouldn't be empty");
+    }
+  };
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
   };
 
   return (
-    <form onSubmit={onSubmitListener}>
-      <div>
-        <label htmlFor="taskName">Task Name</label>
-        <input
-          type="text"
-          id="taskName"
-          name="name"
-          autoComplete="off"
-          ref={inputRef}
-          value={taskName}
-          onChange={onChangeName} />
-      </div>
-      <div>
-        <button type="submit" id="submitForm">
-          Add Task
-        </button>
-      </div>
-    </form>
+    <div>
+      <Button variant="outlined" onClick={handleClickOpen}>
+        New Task
+      </Button>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Add new Task</DialogTitle>
+        <DialogContent>
+          <TextField
+            autoFocus
+            name="name"
+            margin="dense"
+            id="taskName"
+            label="Task name"
+            type="text"
+            value={taskName}
+            fullWidth
+            variant="standard"
+            onChange={onChangeName}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Close</Button>
+          <Button onClick={onSubmitListener}>Add</Button>
+        </DialogActions>
+      </Dialog>
+    </div>
   );
 };
 
