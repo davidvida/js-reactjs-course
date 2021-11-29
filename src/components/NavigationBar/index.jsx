@@ -36,7 +36,7 @@ function NavigationBar(props) {
       <List>
         <ListItemLink to="/" label="Landing Page" icon={<HomeIcon />} />
         <ListItemLink to="/tasks" label="Tasks" icon={<TaskIcon />}/>
-        <ListItemLink to="/tasks/self"label="My Tasks" icon={<TaskIcon />} />
+        <ListItemLink to="/tasks/self" label="My Tasks" icon={<TaskIcon />} />
         <ListItemLink to="/dashboard" label="Dashboard" icon={<DashboardIcon />}/>
       </List>
       <Divider />
