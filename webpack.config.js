@@ -2,9 +2,15 @@ const path = require('path');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'index.bundle.js',
+    publicPath: '/'
+  },
   devServer: {
     port: 3000,
-    open: true
+    open: true,
+    historyApiFallback: true
   },
   ignoreWarnings: [
     {

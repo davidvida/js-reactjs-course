@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import TodoList from "../TodoList";
+import { connect } from "react-redux";
+import { setLoader } from "../../../actions/ui";
 
 class TodoListContainer extends Component {
   constructor(props) {
@@ -15,6 +17,8 @@ class TodoListContainer extends Component {
   }
 
   componentDidMount() {
+    const __this = this;
+    __this.props.setLoaderProp(true);
     // comunicate an external service to get data
     fetch("http://localhost:3000/data/tasks.json")
     .then(response => response.json())
@@ -22,6 +26,9 @@ class TodoListContainer extends Component {
       this.setState({
         list: data.list
       });
+        setTimeout(function() {
+          __this.props.setLoaderProp(false);
+        }, 5000)
     })
     .catch(function(error) {
       console.error(error);
@@ -56,10 +63,12 @@ class TodoListContainer extends Component {
   }
 
   render() {
-    const { list, filterApplied } = this.state;
+    const { filterApplied } = this.state;
+    const { list, loading } = this.props;
     return (
       <TodoList
         list={list}
+        showLoader={loading}
         filterApplied={filterApplied}
         toggleTimer={this.toggleTimer}
         toggleListItem={this.toggleListItem}
@@ -69,4 +78,19 @@ class TodoListContainer extends Component {
   }
 }
 
-export default TodoListContainer;
+const mapStateToProps = state => {
+  return {
+    loading: state.ui.loading,
+    list: state.tasks.data
+  }
+}
+
+const mapDispacthToProps = dispatch => {
+  return {
+    setLoaderProp: (show) => dispatch(setLoader(show))
+  }
+}
+
+
+export default connect(mapStateToProps, mapDispacthToProps)(TodoListContainer);
+
