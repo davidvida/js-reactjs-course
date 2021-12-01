@@ -18,6 +18,7 @@ class TodoList extends React.Component {
   //render method
   render() {
     const { list, filterApplied, toggleTimer, toggleListItem, performAddTask, showLoader } = this.props;
+    console.log('filterApplied', filterApplied)
     return (
       <Container>
         {/* <div>
