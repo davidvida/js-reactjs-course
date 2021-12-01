@@ -2,13 +2,13 @@ import React, { Component } from "react";
 import TodoList from "../TodoList";
 import { connect } from "react-redux";
 import { setLoader } from "../../../actions/ui";
+import { setList } from "../../../actions/tasks";
+import { setFilter } from "../../../actions/filter";
 
 class TodoListContainer extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      list: [],
-      filterApplied: false,
+    this.state = {      
       hideTimer: false
     };
     this.toggleTimer = this.toggleTimer.bind(this);
@@ -23,9 +23,7 @@ class TodoListContainer extends Component {
     fetch("http://localhost:3000/data/tasks.json")
     .then(response => response.json())
     .then(data => {
-      this.setState({
-        list: data.list
-      });
+        __this.props.setListProp(data.list);
         setTimeout(function() {
           __this.props.setLoaderProp(false);
         }, 5000)
@@ -42,34 +40,28 @@ class TodoListContainer extends Component {
   }
 
   toggleListItem(event) {
-    this.setState({
-      filterApplied: event.currentTarget.checked
-    });
+    this.props.setFilterProp(event.currentTarget.checked);
   }
 
   performAddTask(newTask) {
-    this.setState(state => {
+    const { list } = this.props;
       const newTaskElement = {
         ...newTask,
-        id: state.list.length,
+        id: list.length,
         completed: false
       }
-      let newList = [...state.list];
+      let newList = [...list];
       newList.push(newTaskElement);
-      return {
-        list: newList
-      }
-    });
+      this.props.setListProp(newList);
   }
 
   render() {
-    const { filterApplied } = this.state;
-    const { list, loading } = this.props;
+    const { list, loading, filter } = this.props;
     return (
       <TodoList
         list={list}
         showLoader={loading}
-        filterApplied={filterApplied}
+        filterApplied={filter}
         toggleTimer={this.toggleTimer}
         toggleListItem={this.toggleListItem}
         performAddTask={this.performAddTask}
@@ -81,13 +73,16 @@ class TodoListContainer extends Component {
 const mapStateToProps = state => {
   return {
     loading: state.ui.loading,
-    list: state.tasks.data
+    list: state.tasks.data,
+    filter: state.filter.filterApplied
   }
 }
 
 const mapDispacthToProps = dispatch => {
   return {
-    setLoaderProp: (show) => dispatch(setLoader(show))
+    setLoaderProp: (show) => dispatch(setLoader(show)),
+    setListProp: (list) => dispatch(setList(list)),
+    setFilterProp: (filter) => dispatch(setFilter(filter))
   }
 }
 
