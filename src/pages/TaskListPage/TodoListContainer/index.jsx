@@ -19,11 +19,12 @@ class TodoListContainer extends Component {
       .then((response) => response.json())
       .then((data) => {
         this.props.setDataProp(data.list);
+        this.props.setLoaderProp(false);
       })
       .catch(function (error) {
         console.error(error);
       });
-    this.props.setLoaderProp(false);
+   
   }
 
   toggleTimer(event) {
