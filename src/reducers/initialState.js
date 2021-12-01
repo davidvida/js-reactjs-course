@@ -5,7 +5,10 @@ const initialState = {
   },
   tasks:{
     data: []
-  }, 
+  },
+  filter: {
+    filterApplied: false
+  },
   dashboard: {
     data: []
   }
