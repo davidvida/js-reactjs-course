@@ -1,10 +1,13 @@
+
 const initialState = {
   ui: {
     loading: false,
     notifcations: []
   },
   tasks:{
-    data: []
+    data: [],
+    filterApplied:false,
+    hideTimer:true
   }, 
   dashboard: {
     data: []
