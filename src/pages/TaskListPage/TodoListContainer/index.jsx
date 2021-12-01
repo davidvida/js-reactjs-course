@@ -6,11 +6,12 @@ import { setLoader } from "../../../actions/ui";
 class TodoListContainer extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      list: [],
-      filterApplied: false,
-      hideTimer: false
-    };
+    // this.state = {
+    //   list: [],
+    //   filterApplied: false,
+    //   hideTimer: false
+    // };
+    this.state = props.state;
     this.toggleTimer = this.toggleTimer.bind(this);
     this.toggleListItem = this.toggleListItem.bind(this);
     this.performAddTask = this.performAddTask.bind(this);
@@ -64,7 +65,7 @@ class TodoListContainer extends Component {
 
   render() {
     const { filterApplied } = this.state;
-    const { list, loading } = this.props;
+    const { list, loading } = this.props.state;
     return (
       <TodoList
         list={list}
@@ -81,7 +82,8 @@ class TodoListContainer extends Component {
 const mapStateToProps = state => {
   return {
     loading: state.ui.loading,
-    list: state.tasks.data
+    // list: state.tasks.data
+    state: state.tasks.data
   }
 }
 
