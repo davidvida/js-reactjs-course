@@ -37,7 +37,6 @@ const FormAddTask = ({ onSubmitCallback }) => {
         <TextField
             autoFocus
             margin="dense"
-            id="name"
             label="Task Name"
             type="email"
             fullWidth

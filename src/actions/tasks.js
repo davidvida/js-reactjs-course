@@ -7,17 +7,29 @@ export const TASKS = '[TASKS]';
 // command actions
 export const FETCH_TASKS = `${TASKS} FETCH`;
 // document actions
-export const SET_TASKS = `${TASKS} SET`;
+export const SET_TASK_LIST = "SET_TASK_LIST";
+export const SET_TASK_FILTER = "SET_TASK_FILTER";
+export const SET_TASK_HIDE_TIMER = "SET_TASK_HIDE_TIMER";
 
 export const fetchTasks = ({query}) => ({
   type: FETCH_TASKS,
   payload: query
 });
 
-export const setTasks = ({list}) => ({
-  type: SET_TASKS,
-  payload: list
+export const setList = (list) => ({
+  type: SET_TASK_LIST,
+  data: list,
 });
+
+export const setFilter = (filter) => ({
+  type: SET_TASK_FILTER,
+  filterApplied: filter,
+});
+
+export const setHideTimer = (timer) => ({
+  type: SET_TASK_HIDE_TIMER,
+  hideTimer: timer,
+}); 
 
 /*
 FETCH_TASKS -> API_START  -> API_SUCCESS -> SET_TASKS
