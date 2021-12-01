@@ -4,7 +4,9 @@ const initialState = {
     notifcations: []
   },
   tasks:{
-    data: []
+    data: [],
+    filterApplied: false,
+    hideTimer: false
   }, 
   dashboard: {
     data: []
