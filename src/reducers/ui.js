@@ -1,5 +1,5 @@
 // reducer for UI
-import { SET_LOADER } from '../actions/ui';
+import { SET_LOADER, SET_NOTIFICATION } from '../actions/ui';
 import initialState from './initialState';
 
 const uiReducer = (state = initialState.ui, action) => {
@@ -8,6 +8,13 @@ const uiReducer = (state = initialState.ui, action) => {
       return {
         ...state,
         loading: action.payload
+      };
+    case SET_NOTIFICATION:
+      let newNotifications = [...state.notifcations];
+      newNotifications.push(action.payload);
+      return {
+        ...state,
+        notifications: newNotifications
       };
     default:
       return state;

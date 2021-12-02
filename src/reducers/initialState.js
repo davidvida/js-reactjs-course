@@ -3,8 +3,9 @@ const initialState = {
     loading: false,
     notifcations: []
   },
-  tasks:{
-    data: []
+  tasks: {
+    data: [],
+    applyFilter: false
   }, 
   dashboard: {
     data: []
