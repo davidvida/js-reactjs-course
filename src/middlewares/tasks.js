@@ -1,22 +1,41 @@
 import { apiStart, API_FAILURE, API_SUCCESS } from "../actions/api";
-import { FETCH_TASKS, setList } from "../actions/tasks";
+import {
+  FETCH_TASKS,
+  SET_TASK_LIST,
+  setList,
+  ADD_TASKS,
+  addTasks,
+} from "../actions/tasks";
 import { setLoader, setNotification } from "../actions/ui";
 
-const TASKS_API_GET = "http://localhost:3000/data/tasks.json";
+const TASKS_API_ENDPOINT = "http://localhost:3000/data/tasks.json";
 
 export const tasksMiddleware = () => (next) => (action) => {
   next(action);
-  switch(action.type) {
+  switch (action.type) {
     case FETCH_TASKS:
-      next(apiStart({body: null, method: 'GET', url: TASKS_API_GET}));
+      next(apiStart({ body: null, method: "GET", url: TASKS_API_ENDPOINT }));
       next(setLoader(true));
       break;
+    case ADD_TASKS:
+      next(
+        apiStart({
+          body: action.payload,
+          method: "POST",
+          url: TASKS_API_ENDPOINT,
+        })
+      );
     case API_SUCCESS:
+    case SET_TASK_LIST:
       next(setList({ list: action.payload }));
       next(setLoader(false));
       break;
+    case API_SUCCESS:
+    case ADD_TASKS:
+      next(addTasks({ task: action.payload }));
+      break;
     case API_FAILURE:
-      next(setNotification({error: action.payload}));
+      next(setNotification({ error: action.payload }));
       next(setLoader(false));
   }
 };
