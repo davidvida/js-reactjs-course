@@ -6,8 +6,13 @@ export const TASKS = '[TASKS]';
 // action types
 // command actions
 export const FETCH_TASKS = `${TASKS} FETCH`;
+// Tarea 5:
+export const POST_TASK = `${TASKS} POST`;
+
 // document actions
 export const SET_TASKS = `${TASKS} SET`;
+// Tarea 5:
+export const ADD_TASK = `${TASKS} ADD`;
 
 export const fetchTasks = ({query}) => ({
   type: FETCH_TASKS,
@@ -17,6 +22,11 @@ export const fetchTasks = ({query}) => ({
 export const setTasks = ({list}) => ({
   type: SET_TASKS,
   payload: list
+});
+
+export const addTask = ({task}) => ({
+  type: POST_TASK,
+  payload: task
 });
 
 /*

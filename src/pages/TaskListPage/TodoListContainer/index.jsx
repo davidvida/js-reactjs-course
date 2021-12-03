@@ -3,6 +3,7 @@ import TodoList from "../TodoList";
 import { connect } from "react-redux";
 import { setLoader } from "../../../actions/ui";
 import { fetchTasks } from "../../../actions/tasks";
+import { addTask } from "../../../actions/tasks";
 
 class TodoListContainer extends Component {
   constructor(props) {
@@ -37,18 +38,16 @@ class TodoListContainer extends Component {
     /*Challenge
     * Create a new command action and the necessary actions and middlewares to manage this process
     */
-    // this.setState(state => {
-    //   const newTaskElement = {
-    //     ...newTask,
-    //     id: this.propsstate.list.length,
-    //     completed: false
-    //   }
-    //   let newList = [...state.list];
-    //   newList.push(newTaskElement);
-    //   return {
-    //     list: newList
-    //   }
-    // });
+    const { list } = this.props;
+    const newTaskElement = {
+      ...newTask,
+      id: list.length,
+      completed: false
+    }
+    //let newList = [...list];
+    //newList.push(newTaskElement);
+    //this.props.setTasks(newList);
+    this.props.addTask(newTaskElement);
   }
 
   render() {
@@ -76,7 +75,8 @@ const mapStateToProps = state => {
 
 const mapDispacthToProps = dispatch => {
   return {
-    fetchTasks: () => dispatch(fetchTasks({query: {}}))
+    fetchTasks: () => dispatch(fetchTasks({query: {}})),
+    addTask: (task) => dispatch(addTask(task))
   }
 }
 
