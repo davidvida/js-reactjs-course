@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import TodoList from "../TodoList";
 import { connect } from "react-redux";
 import { setLoader } from "../../../actions/ui";
-import { fetchTasks } from "../../../actions/tasks";
+import { fetchTasks, addTasks } from "../../../actions/tasks";
 
 class TodoListContainer extends Component {
   constructor(props) {
@@ -34,21 +34,15 @@ class TodoListContainer extends Component {
   }
 
   performAddTask(newTask) {
-    /*Challenge
-    * Create a new command action and the necessary actions and middlewares to manage this process
-    */
-    // this.setState(state => {
-    //   const newTaskElement = {
-    //     ...newTask,
-    //     id: this.propsstate.list.length,
-    //     completed: false
-    //   }
-    //   let newList = [...state.list];
-    //   newList.push(newTaskElement);
-    //   return {
-    //     list: newList
-    //   }
-    // });
+    const newTaskElement = {
+      ...newTask,
+      id: this.props.list.length,
+      completed: false
+    }
+    let newList = [...this.props.list];
+    newList.push(newTaskElement);
+
+    return this.props.addTasks(newList)
   }
 
   render() {
@@ -58,7 +52,7 @@ class TodoListContainer extends Component {
       <TodoList
         list={list}
         showLoader={loading}
-        filterApplied={filterApplied}
+        filterApplied={filterApplied}                                                                                                                           
         toggleTimer={this.toggleTimer}
         toggleListItem={this.toggleListItem}
         performAddTask={this.performAddTask}
@@ -76,7 +70,8 @@ const mapStateToProps = state => {
 
 const mapDispacthToProps = dispatch => {
   return {
-    fetchTasks: () => dispatch(fetchTasks({query: {}}))
+    fetchTasks: () => dispatch(fetchTasks({query: {}})),
+    addTasks: (task) => dispatch(addTasks({task: task}))
   }
 }
 
