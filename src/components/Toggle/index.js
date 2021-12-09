@@ -6,6 +6,7 @@ const Toggle = ({ label, onToggle, active }) => {
   return (
     <FormControlLabel control={
       <Switch
+        data-testid="toggle"
         onChange={onToggle}
         defaultChecked={active}
       />
