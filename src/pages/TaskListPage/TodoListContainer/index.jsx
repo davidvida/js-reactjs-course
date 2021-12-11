@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import TodoList from "../TodoList";
 import { connect } from "react-redux";
 import { setLoader } from "../../../actions/ui";
-import { fetchTasks } from "../../../actions/tasks";
+import { POST_TASK, setTasks, fetchTasks } from "../../../actions/tasks";
 
 class TodoListContainer extends Component {
   constructor(props) {
@@ -49,6 +49,21 @@ class TodoListContainer extends Component {
     //     list: newList
     //   }
     // });
+    console.info(this.props);
+    this.setState(state => {
+      debugger;
+      const newTaskElement = {
+        ...newTask,
+        id: this.props.list.length,
+        completed: false
+      };
+      let newList = [...this.props.list];
+      newList.push(newTaskElement);
+      this.props.setTasks(newTaskElement);
+      return {
+        list: newList
+      }
+    });
   }
 
   render() {
@@ -76,7 +91,8 @@ const mapStateToProps = state => {
 
 const mapDispacthToProps = dispatch => {
   return {
-    fetchTasks: () => dispatch(fetchTasks({query: {}}))
+    fetchTasks: () => dispatch(fetchTasks({query: {}})),
+    setTasks: (data) => dispatch(setTasks(data))
   }
 }
 

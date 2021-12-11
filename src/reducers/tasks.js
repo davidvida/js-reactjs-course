@@ -1,6 +1,6 @@
 // reducer for UI
 
-import { SET_TASKS } from '../actions/tasks';
+import { SET_TASKS, ADD_TASK } from '../actions/tasks';
 import initialState from './initialState';
 
 const tasksReducer = (state=initialState.tasks, action) => {
@@ -10,6 +10,8 @@ const tasksReducer = (state=initialState.tasks, action) => {
         ...state,
         data: action.payload
       };
+    case ADD_TASK:
+      return { ...state, data: [...state.data, action.payload] };
     default:
       return state;
   }
