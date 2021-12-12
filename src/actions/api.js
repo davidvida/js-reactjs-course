@@ -7,7 +7,7 @@ export const API_FAILURE = 'API_FAILURE';
 export const apiStart = ({body, method, url}) =>  ({
   type: API_START,
   payload: body,
-  meta: {method, url}
+  meta: {method, url, body}
 });
 
 export const apiSuccess = ({response}) =>  ({

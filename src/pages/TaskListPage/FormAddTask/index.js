@@ -14,10 +14,10 @@ const FormAddTask = ({ onSubmitCallback }) => {
 
   const onSubmitListener = (event) => {
     event.preventDefault();
+    setTaskName("");
     onSubmitCallback({
       name: taskName
     });
-    setTaskName("");
   };
 
   return (

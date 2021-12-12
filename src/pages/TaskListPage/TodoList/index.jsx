@@ -30,7 +30,7 @@ class TodoList extends React.Component {
         </div> */}
         <FormAddTask onSubmitCallback={performAddTask} />
         <LoadingIndicator show={showLoader} />
-        { list.length > 0 && (
+        { list && list.length > 0 && (
           <>
             <Toggle active={filterApplied} label="Hide completed" onToggle={toggleListItem} />
             

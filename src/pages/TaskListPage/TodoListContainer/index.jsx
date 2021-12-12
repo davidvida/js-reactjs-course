@@ -2,14 +2,16 @@ import React, { Component } from "react";
 import TodoList from "../TodoList";
 import { connect } from "react-redux";
 import { setLoader } from "../../../actions/ui";
-import { fetchTasks } from "../../../actions/tasks";
+import { fetchTasks, addTasks } from "../../../actions/tasks";
 
 class TodoListContainer extends Component {
   constructor(props) {
+    debugger;
     super(props);
     this.state = {
       filterApplied: false,
-      hideTimer: false
+      hideTimer: false,
+      count: 0
     };
     this.toggleTimer = this.toggleTimer.bind(this);
     this.toggleListItem = this.toggleListItem.bind(this);
@@ -49,6 +51,15 @@ class TodoListContainer extends Component {
     //     list: newList
     //   }
     // });
+    console.info(this.props);
+    const newTaskElement = {
+      ...newTask,
+      id: this.props.list.length || 0,
+      completed: false
+    };
+    let newList = [...this.props.list];
+    newList.push(newTaskElement);
+    return this.props.addTasks(newList); 
   }
 
   render() {
@@ -68,6 +79,7 @@ class TodoListContainer extends Component {
 }
 
 const mapStateToProps = state => {
+  debugger;
   return {
     loading: state.ui.loading,
     list: state.tasks.data
@@ -76,7 +88,8 @@ const mapStateToProps = state => {
 
 const mapDispacthToProps = dispatch => {
   return {
-    fetchTasks: () => dispatch(fetchTasks({query: {}}))
+    fetchTasks: () => dispatch(fetchTasks({query: {}})),
+    addTasks: (task => dispatch(addTasks({task: task})))
   }
 }
 

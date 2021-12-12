@@ -9,6 +9,8 @@ export const FETCH_TASKS = `${TASKS} FETCH`;
 // document actions
 export const SET_TASKS = `${TASKS} SET`;
 
+export const ADD_TASKS = `${TASKS} ADD`;
+
 export const fetchTasks = ({query}) => ({
   type: FETCH_TASKS,
   payload: query
@@ -19,6 +21,10 @@ export const setTasks = ({list}) => ({
   payload: list
 });
 
+export const addTasks = ({task}) => ({
+  type: ADD_TASKS,
+  payload: task
+});
 /*
 FETCH_TASKS -> API_START  -> API_SUCCESS -> SET_TASKS
                SET_LOADER                   SET_LOADER
