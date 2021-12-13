@@ -6,7 +6,6 @@ import { fetchTasks, addTasks } from "../../../actions/tasks";
 
 class TodoListContainer extends Component {
   constructor(props) {
-    debugger;
     super(props);
     this.state = {
       filterApplied: false,
@@ -54,12 +53,20 @@ class TodoListContainer extends Component {
     console.info(this.props);
     const newTaskElement = {
       ...newTask,
-      id: this.props.list.length || 0,
-      completed: false
+      id: this.props.list.length,
+      completed: false,
+      description: 'Generic description',
+      startDate: "2021-12-12T21:01:58.167Z",
+      endDate: "2021-12-12T21:01:58.167Z",
+      user: 'Miguel Montalvo'
     };
+    /**Add remote request method */
     let newList = [...this.props.list];
-    newList.push(newTaskElement);
-    return this.props.addTasks(newList); 
+    return this.props.addTasks(newTaskElement)
+    .then(data => {
+      newList.push(newTaskElement);
+      return newList;
+    }); 
   }
 
   render() {
@@ -79,7 +86,6 @@ class TodoListContainer extends Component {
 }
 
 const mapStateToProps = state => {
-  debugger;
   return {
     loading: state.ui.loading,
     list: state.tasks.data
@@ -89,7 +95,11 @@ const mapStateToProps = state => {
 const mapDispacthToProps = dispatch => {
   return {
     fetchTasks: () => dispatch(fetchTasks({query: {}})),
-    addTasks: (task => dispatch(addTasks({task: task})))
+    addTasks: (task => {
+      return new Promise(resolve => {
+        resolve(dispatch(addTasks({task: task})));
+      })
+    })
   }
 }
 

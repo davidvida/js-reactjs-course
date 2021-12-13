@@ -25,6 +25,7 @@ export const addTasks = ({task}) => ({
   type: ADD_TASKS,
   payload: task
 });
+
 /*
 FETCH_TASKS -> API_START  -> API_SUCCESS -> SET_TASKS
                SET_LOADER                   SET_LOADER
