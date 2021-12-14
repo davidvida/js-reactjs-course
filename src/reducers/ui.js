@@ -10,11 +10,9 @@ const uiReducer = (state = initialState.ui, action) => {
         loading: action.payload
       };
     case SET_NOTIFICATION:
-      let newNotifications = [...state.notifcations];
-      newNotifications.push(action.payload);
       return {
         ...state,
-        notifications: newNotifications
+        notifications: [...state.notifcations, action.payload]
       };
     default:
       return state;

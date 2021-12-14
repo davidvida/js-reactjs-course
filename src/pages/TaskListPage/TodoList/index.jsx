@@ -1,23 +1,32 @@
-import React from 'react';
-import { Container, Divider, List, Paper } from '@mui/material';
+import React from "react";
+import { Container, Divider, List, Paper, Box, Typography } from "@mui/material";
 // import Timer from '../Timer';
-import Timer from 'Components/TimerFunction';
-import TodoListItem from '../TodoListItem';
-import FormAddTask from '../FormAddTask';
-import Toggle from 'Components/Toggle';
-import LoadingIndicator from 'Components/LoadingIndicator';
+import Timer from "Components/TimerFunction";
+import TodoListItem from "../TodoListItem";
+import FormAddTask from "../FormAddTask";
+import Toggle from "Components/Toggle";
+import LoadingIndicator from "Components/LoadingIndicator";
+import ChartCard from "../../../components/ChartCard";
 
 /*
-* class based component
-*/
+ * class based component
+ */
 class TodoList extends React.Component {
   constructor(props) {
     super(props);
   }
-
   //render method
   render() {
-    const { list, filterApplied, toggleTimer, toggleListItem, performAddTask, showLoader } = this.props;
+    const {
+      list,
+      filterApplied,
+      toggleTimer,
+      toggleListItem,
+      performAddTask,
+      performUpdateTask,
+      showLoader,
+      user,
+    } = this.props;
     return (
       <Container>
         {/* <div>
@@ -28,30 +37,58 @@ class TodoList extends React.Component {
           { !hideTimer && <Timer /> }
 
         </div> */}
-        <FormAddTask onSubmitCallback={performAddTask} />
-        <LoadingIndicator show={showLoader} />
-        { list.length > 0 && (
-          <>
-            <Toggle active={filterApplied} label="Hide completed" onToggle={toggleListItem} />
-            
-            <Paper>
-              <List>
-              {list.filter(item => (!filterApplied ? true : !item.completed)).map((item, index, array) => {
-                return (
-                  <>
-                    <TodoListItem key={item.id} completed={item.completed} name={item.name} />
-                    { index < array.length -1  && <Divider /> }
-                  </>
-                )
-              })}
-              </List>
-            </Paper>
-          </>
-        )}
+        <Box>
+          {user ? <Typography variant="h3">Welcome: {user}</Typography> : null}
+          <Box display="flex" justifyContent="space-between">
+            <FormAddTask onSubmitCallback={performAddTask} />
+            <Toggle
+              active={filterApplied}
+              label="Hide completed"
+              onToggle={toggleListItem}
+            />
+          </Box>
+          <Box
+            sx={{
+              display: "grid",
+              gap: 2,
+              gridTemplateColumns: "repeat(3, 1fr)",
+            }}
+          >
+            <Box sx={{ gridColumn: "1/3" }}>
+            <LoadingIndicator show={showLoader} />
+              {list.length > 0 && (
+                <>
+                  <Paper>
+                    <List>
+                      {list
+                        .filter((item) =>
+                          !filterApplied ? true : !item.completed
+                        )
+                        .map((item, index, array) => {
+                          return (
+                            <React.Fragment key={item._id}>
+                              <TodoListItem
+                                key={item._id}
+                                item={item}
+                                performUpdateTask={performUpdateTask}
+                              />
+                              {index < array.length - 1 && <Divider />}
+                            </React.Fragment>
+                          );
+                        })}
+                    </List>
+                  </Paper>
+                </>
+              )}
+            </Box>
+            <Box sx={{ gridColumn: "3/3" }}>
+              <ChartCard data={list}></ChartCard>
+            </Box>
+          </Box>
+        </Box>
       </Container>
     );
   }
-
 }
 
 export default TodoList;

@@ -6,20 +6,21 @@ import {
   setList,
   setFilter,
   fetchTasks,
-  addTasks,
+  postTask,
+  putTask,
 } from "../../../actions/tasks";
-
 class TodoListContainer extends Component {
   constructor(props) {
     super(props);
     this.toggleTimer = this.toggleTimer.bind(this);
     this.toggleListItem = this.toggleListItem.bind(this);
     this.performAddTask = this.performAddTask.bind(this);
+    this.performUpdateTask = this.performUpdateTask.bind(this);
+    this.getList = this.getList.bind(this);
   }
 
   componentDidMount() {
-    const __this = this;
-    __this.props.fetchTasks();
+    this.props.fetchTasks();
   }
 
   toggleTimer(event) {
@@ -31,26 +32,30 @@ class TodoListContainer extends Component {
   }
 
   performAddTask(newTask) {
-    const { list } = this.props;
-    const newTaskElement = {
-      ...newTask,
-      id: list.length,
-      completed: false,
-    };
-    let newList = [...list, newTaskElement];
-    return this.props.addTasks(newList);
+    return this.props.postTask(newTask);
+  }
+  performUpdateTask(taskBody, id) {
+    return this.props.putTask(taskBody, id);
+  }
+
+  getList(list) {
+    if(this.props.user)
+      return list.filter((task) => task.user === this.props.user);
+    return list;
   }
 
   render() {
-    const { list, loading, filter } = this.props;
+    const { list, loading, filter, user } = this.props;
     return (
       <TodoList
-        list={list}
+        list={this.getList(list)}
+        user={user}
         showLoader={loading}
         filterApplied={filter}
         toggleTimer={this.toggleTimer}
         toggleListItem={this.toggleListItem}
         performAddTask={this.performAddTask}
+        performUpdateTask={this.performUpdateTask}
       />
     );
   }
@@ -71,7 +76,8 @@ const mapDispacthToProps = (dispatch) => {
     setListProp: (list) => dispatch(setList(list)),
     setFilterProp: (filter) => dispatch(setFilter(filter)),
     setHideTimerProp: (filter) => dispatch(setHideTimer(filter)),
-    addTasks: (task) => dispatch(addTasks({ task: task })),
+    postTask: (task) => dispatch(postTask({ task })),
+    putTask: (task, paramId) => dispatch(putTask({ task, paramId })),
     fetchTasks: () => dispatch(fetchTasks({ query: {} })),
   };
 };

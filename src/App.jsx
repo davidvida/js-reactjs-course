@@ -19,8 +19,8 @@ function App () {
               <Route index element={<div>Landing Page</div>} />
               {/* /tasks */}
               <Route path="tasks" element={<TasksListPage />} />
-              {/* /tasks/self */}
-              <Route path="tasks/self" element={<div>My Tasks</div>} />
+              {/* /tasks/:user */}
+              <Route path="tasks/:user" element={<TasksListPage />} />
               {/* /dashboard */}
               <Route path="dashboard" element={<div>Dashboard in construction</div>} />
             </Route>

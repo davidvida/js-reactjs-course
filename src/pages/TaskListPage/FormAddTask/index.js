@@ -1,19 +1,35 @@
-import React, { useState, useRef, useEffect } from "react";
-import { TextField, Button, Dialog, DialogContent, DialogTitle, DialogActions } from '@mui/material';
+import React, { useState } from "react";
+import {
+  TextField,
+  Button,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogActions,
+} from "@mui/material";
 
 const FormAddTask = ({ onSubmitCallback }) => {
   const [taskName, setTaskName] = useState("");
-   const [open, setOpen] = React.useState(false);
+  const [taskDescription, setTaskDescription] = useState("");
+  const [open, setOpen] = React.useState(false);
 
-  
   const onChangeName = (event) => {
     setTaskName(event.target.value);
-  }
+  };
+  const onChangeDescription = (event) => {
+    setTaskDescription(event.target.value);
+  };
 
   const onSubmitListener = (event) => {
     event.preventDefault();
     onSubmitCallback({
-      name: taskName
+      name: taskName,
+      description: taskDescription,
+      labels: [],
+      startDate: "",
+      endDate: "",
+      completed: false,
+      user: "David",
     });
     setTaskName("");
     setOpen(false);
@@ -25,20 +41,20 @@ const FormAddTask = ({ onSubmitCallback }) => {
   const handleClose = () => {
     setOpen(false);
   };
-  // main -> feature/david-mamani_dialog
+
   return (
-    <form >
-        <Button variant="outlined" onClick={handleClickOpen}>
-          Add New Task
-        </Button>
-        <Dialog open={open} onClose={handleClose}>
+    <form>
+      <Button variant="outlined" onClick={handleClickOpen}>
+        Add New Task
+      </Button>
+      <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Add New Task</DialogTitle>
         <DialogContent>
-        <TextField
+          <TextField
             autoFocus
             margin="dense"
             label="Task Name"
-            type="email"
+            type="text"
             fullWidth
             variant="standard"
             id="taskName"
@@ -46,12 +62,24 @@ const FormAddTask = ({ onSubmitCallback }) => {
             autoComplete="off"
             value={taskName}
             onChange={onChangeName}
-        />
+          />
+          <TextField
+            margin="dense"
+            label="Description"
+            type="text"
+            fullWidth
+            variant="standard"
+            id="taskDescription"
+            name="description"
+            autoComplete="off"
+            value={taskDescription}
+            onChange={onChangeDescription}
+          />
         </DialogContent>
-      <DialogActions>
-        <Button onClick={handleClose}>Cancel</Button>
-        <Button onClick={onSubmitListener} >Add Task</Button>
-      </DialogActions>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={onSubmitListener}>Add Task</Button>
+        </DialogActions>
       </Dialog>
     </form>
   );

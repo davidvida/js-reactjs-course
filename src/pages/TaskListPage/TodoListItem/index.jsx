@@ -1,66 +1,65 @@
 import React from "react";
-import { IconButton, ListItem, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
-import PlayIcon from '@mui/icons-material/PlayCircleOutlined'
-import CompletedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
-import PendingIcon from '@mui/icons-material/PendingOutlined';
+import {
+  IconButton,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+} from "@mui/material";
+import PlayIcon from "@mui/icons-material/PlayCircleOutlined";
+import CompletedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
+import PendingIcon from "@mui/icons-material/PendingOutlined";
+import OpenIcon from "@mui/icons-material/CircleOutlined";
 /* styles import */
-import { withStyles } from "@mui/styles";
-import styles from './styles';
-
-/*
-* class based component
-*/
-// class TodoListItem extends React.Component {
-//   constructor(props) {
-//     super(props);
-//   }
-
-//   render() {
-//     const { name, completed, classes } = this.props;
-//     return (
-//       <ListItem
-//         disablePadding
-//         secondaryAction={
-//           <IconButton edge="end" aria-label="play">
-//             <PlayIcon />
-//           </IconButton>
-//         }
-//       >
-//         <ListItemButton>
-//           <ListItemIcon>
-//             { completed ? <CompletedIcon className={classes.icon} /> : <PendingIcon /> }
-//           </ListItemIcon>
-//           <ListItemText primary={name} />
-//         </ListItemButton>
-//       </ListItem>
-//     )
-//   }
-// }
-
-/*
-* function component
-*/
 import useStyles from "./styles";
 
-const TodoListItem = ({ name, completed }) => {
+const StatusIcon = ({ item }) => {
   const classes = useStyles();
+  if (item.completed && item.startDate && item.endDate) {
+    return <CompletedIcon className={classes.iconCompleted} />;
+  } else if (!item.completed && item.startDate && !item.endDate) {
+    return <PendingIcon className={classes.iconPending} />;
+  } else {
+    return <OpenIcon className={classes.iconOpen} />;
+  }
+};
+
+const TodoListItem = ({ performUpdateTask, item }) => {
+  const updateTask = () => {
+    let body = {};
+    if (!item.startDate && !item.completed) {
+      body = {
+        startDate: new Date().toISOString(),
+        completed: false,
+      };
+    } else if (item.startDate && !item.completed) {
+      body = {
+        endDate: new Date().toISOString(),
+        completed: true,
+      };
+    }
+    performUpdateTask(body, item._id);
+  };
   return (
     <ListItem
       disablePadding
       secondaryAction={
-        <IconButton edge="end" aria-label="play">
-          <PlayIcon />
-        </IconButton>
+        !item.completed ? (
+          <IconButton edge="end" aria-label="play" onClick={updateTask}>
+            <PlayIcon />
+          </IconButton>
+        ) : null
       }
     >
       <ListItemButton>
         <ListItemIcon>
-          { completed ? <CompletedIcon className={classes.icon} /> : <PendingIcon /> }
+          <StatusIcon item={item} />
         </ListItemIcon>
-        <ListItemText primary={name} />
+        <ListItemText primary={item.name} />
+        <ListItemText primary={item.user} />
       </ListItemButton>
     </ListItem>
-  )
+  );
 };
 
 // export default withStyles(styles)(TodoListItem);

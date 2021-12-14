@@ -4,15 +4,16 @@ export const API_START = 'API_START';
 export const API_SUCCESS = 'API_SUCCESS';
 export const API_FAILURE = 'API_FAILURE';
 
-export const apiStart = ({body, method, url}) =>  ({
+export const apiStart = ({ body, method, url, onSuccess }) => ({
   type: API_START,
   payload: body,
-  meta: {method, url}
+  meta: { method, url, onSuccess },
 });
 
-export const apiSuccess = ({response}) =>  ({
+export const apiSuccess = ({ response, onSuccess }) => ({
   type: API_SUCCESS,
-  payload: response
+  payload: response,
+  meta: onSuccess,
 });
 
 export const apiFailure = ({error}) =>  ({
