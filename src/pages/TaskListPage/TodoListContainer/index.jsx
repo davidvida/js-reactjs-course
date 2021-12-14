@@ -55,7 +55,6 @@ class TodoListContainer extends Component {
       ...newTask,
       id: this.props.list.length,
       completed: false,
-      description: 'Generic description',
       startDate: "2021-12-12T21:01:58.167Z",
       endDate: "2021-12-12T21:01:58.167Z",
       user: 'Miguel Montalvo'

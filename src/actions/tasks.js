@@ -3,6 +3,8 @@ import { SET_LOADER } from "./ui";
 // feature name
 export const TASKS = '[TASKS]';
 
+export const USER_TASKS = `[USER_TASKS]`;
+
 // action types
 // command actions
 export const FETCH_TASKS = `${TASKS} FETCH`;
@@ -10,6 +12,8 @@ export const FETCH_TASKS = `${TASKS} FETCH`;
 export const SET_TASKS = `${TASKS} SET`;
 
 export const ADD_TASKS = `${TASKS} ADD`;
+
+export const FETCH_USER_TASKS = `${USER_TASKS} FETCH`;
 
 export const fetchTasks = ({query}) => ({
   type: FETCH_TASKS,
@@ -26,9 +30,23 @@ export const addTasks = ({task}) => ({
   payload: task
 });
 
+export const fetchUserTasks = (query) => {
+  return {
+    type: FETCH_USER_TASKS,
+    payload: query
+  };
+};
+
 /*
 FETCH_TASKS -> API_START  -> API_SUCCESS -> SET_TASKS
                SET_LOADER                   SET_LOADER
+                          -> API_FAILURE -> SET_NOTIFICATION
+                                            SET_LOADER
+*/
+
+/*
+FETCH_USER_TASKS -> API_START  -> API_SUCCESS -> SET_USER_TASKS
+                    SET_LOADER                   SET_LOADER
                           -> API_FAILURE -> SET_NOTIFICATION
                                             SET_LOADER
 */
