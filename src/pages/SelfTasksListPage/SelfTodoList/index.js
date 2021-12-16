@@ -27,7 +27,7 @@ class SelfTodoList extends React.Component {
               {list.filter(item => (!filterApplied ? true : !item.completed)).map((item, index, array) => {
                 return (
                   <>
-                    <TodoListItem key={item.id} completed={item.completed} name={item.name} />
+                    <TodoListItem key={item._id} completed={item.completed} name={item.name} enabled={true} />
                     { index < array.length -1  && <Divider /> }
                   </>
                 )

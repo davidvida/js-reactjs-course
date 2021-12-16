@@ -6,6 +6,7 @@ export const API_SUCCESS = 'API_SUCCESS';
 export const POST_SUCCESS = 'POST_SUCCESS';
 export const API_FAILURE = 'API_FAILURE';
 export const API_SELF_START = 'API_SELF_START';
+export const API_PUT = 'API_PUT';
 
 export const apiStart = ({body, method, url}) => {
   return {
@@ -45,3 +46,11 @@ export const apiFailure = ({error}) =>  ({
   type: API_FAILURE,
   payload: error
 });
+
+export const apiPut = ({body, method='POST', url}) => {
+  return {
+    type: API_PUT,
+    payload: body,
+    meta: {method, url, body}
+  };
+}

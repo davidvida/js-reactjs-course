@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import TodoList from "../TodoList";
 import { connect } from "react-redux";
 import { setLoader } from "../../../actions/ui";
-import { fetchTasks, addTasks } from "../../../actions/tasks";
+import { fetchTasks, addTasks, updateTask } from "../../../actions/tasks";
 
 class TodoListContainer extends Component {
   constructor(props) {
@@ -15,6 +15,7 @@ class TodoListContainer extends Component {
     this.toggleTimer = this.toggleTimer.bind(this);
     this.toggleListItem = this.toggleListItem.bind(this);
     this.performAddTask = this.performAddTask.bind(this);
+    this.performUpdateTask = this.performUpdateTask.bind(this);
   }
 
   componentDidMount() {
@@ -51,12 +52,13 @@ class TodoListContainer extends Component {
     //   }
     // });
     console.info(this.props);
+    const date = new Date();
     const newTaskElement = {
       ...newTask,
       id: this.props.list.length,
       completed: false,
-      startDate: "2021-12-12T21:01:58.167Z",
-      endDate: "2021-12-12T21:01:58.167Z",
+      startDate: date.toISOString(),
+      endDate: date.toISOString(),
       user: 'Miguel Montalvo'
     };
     /**Add remote request method */
@@ -66,6 +68,23 @@ class TodoListContainer extends Component {
       newList.push(newTaskElement);
       return newList;
     }); 
+  }
+
+  performUpdateTask(task, completed) {
+    const updatedTask = {
+      ...task
+    };
+    const date = new Date();
+    updatedTask.completed = completed;
+    if (completed) {
+      updatedTask.endDate = date.toISOString();
+    } else {
+      updatedTask.startDate = date.toISOString();
+    }
+    return this.props.updateTask(updatedTask)
+    .then(data => {
+      return this.props.list;
+    })
   }
 
   render() {
@@ -79,6 +98,7 @@ class TodoListContainer extends Component {
         toggleTimer={this.toggleTimer}
         toggleListItem={this.toggleListItem}
         performAddTask={this.performAddTask}
+        performUpdateTask={this.performUpdateTask}
       />
     )
   }
@@ -98,6 +118,11 @@ const mapDispacthToProps = dispatch => {
       return new Promise(resolve => {
         resolve(dispatch(addTasks({task: task})));
       })
+    }),
+    updateTask: (task => {
+      return new Promise(resolve =>  {
+        resolve(dispatch(updateTask({task: task})));
+      });
     })
   }
 }

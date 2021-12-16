@@ -15,6 +15,8 @@ export const ADD_TASKS = `${TASKS} ADD`;
 
 export const FETCH_USER_TASKS = `${USER_TASKS} FETCH`;
 
+export const PUT_TASK = `${TASKS} PUT`;
+
 export const fetchTasks = ({query}) => ({
   type: FETCH_TASKS,
   payload: query
@@ -36,6 +38,11 @@ export const fetchUserTasks = (query) => {
     payload: query
   };
 };
+
+export const updateTask = ({task}) => ({
+  type: PUT_TASK,
+  payload: task
+});
 
 /*
 FETCH_TASKS -> API_START  -> API_SUCCESS -> SET_TASKS

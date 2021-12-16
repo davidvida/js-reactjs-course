@@ -36,7 +36,9 @@ const FormAddTask = ({ onSubmitCallback }) => {
   }
 
   const onChangeLabels = (chips) => {
-    setTaskLabels(chips);
+    if (chips.length <= 3) {
+      setTaskLabels(chips);
+    }
   }
 
   const onSubmitListener = (event) => {
@@ -97,9 +99,7 @@ const FormAddTask = ({ onSubmitCallback }) => {
           </DialogContentText>
           <ChipInput
             id="taskLabels"
-            onChange={(chips) => onChangeLabels(chips)}
-            >
-
+            onChange={(chips) => onChangeLabels(chips)}>
           </ChipInput>
         </DialogContent>
         <DialogActions>

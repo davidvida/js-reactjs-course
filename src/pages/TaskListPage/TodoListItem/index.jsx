@@ -1,6 +1,7 @@
 import React from "react";
 import { IconButton, ListItem, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
-import PlayIcon from '@mui/icons-material/PlayCircleOutlined'
+import PlayIcon from '@mui/icons-material/PlayCircleOutlined';
+import StopRounded from '@mui/icons-material/StopRounded';
 import CompletedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
 import PendingIcon from '@mui/icons-material/PendingOutlined';
 /* styles import */
@@ -42,14 +43,19 @@ import styles from './styles';
 */
 import useStyles from "./styles";
 
-const TodoListItem = ({ name, completed }) => {
+
+const TodoListItem = ({ name, completed, item, enabled, updateTask }) => {
   const classes = useStyles();
+  const onUpdateListener = (event) => {
+    event.preventDefault();
+    updateTask(item, !completed);
+  };
   return (
     <ListItem
       disablePadding
       secondaryAction={
-        <IconButton edge="end" aria-label="play">
-          <PlayIcon />
+        <IconButton edge="end" aria-label="play" onClick={onUpdateListener}>
+          { completed ? <StopRounded /> : <PlayIcon /> }
         </IconButton>
       }
     >
