@@ -2,8 +2,14 @@
 import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles({
-  icon: {
+  iconCompleted: {
     color: 'green',
+  },
+  iconPending: {
+    color: 'orange',
+  },
+  iconOpen: {
+    color: 'gray',
   },
 });
 

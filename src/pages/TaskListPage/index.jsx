@@ -1,10 +1,10 @@
 import React from "react";
 import TodoListContainer from "./TodoListContainer";
+import { useParams } from "react-router";
 
 const TasksListPage = () => {
-  return (
-    <TodoListContainer />
-  );
+  const { user } = useParams();
+  return <TodoListContainer user={user} />;
 };
 
 export default TasksListPage;
