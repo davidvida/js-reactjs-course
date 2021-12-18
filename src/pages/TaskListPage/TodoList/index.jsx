@@ -17,7 +17,7 @@ class TodoList extends React.Component {
 
   //render method
   render() {
-    const { list, filterApplied, toggleTimer, toggleListItem, performAddTask, showLoader } = this.props;
+        const { list, filterApplied, toggleTimer, toggleListItem, performAddTask, showLoader, addTimer,performUpdateTask } = this.props;
     return (
       <Container>
         {/* <div>
@@ -39,7 +39,7 @@ class TodoList extends React.Component {
               {list.filter(item => (!filterApplied ? true : !item.completed)).map((item, index, array) => {
                 return (
                   <>
-                    <TodoListItem key={item.id} completed={item.completed} name={item.name} />
+                    <TodoListItem key={item.id} id={item.id} item={item} completed={item.completed} name={item.name}  onToggle={toggleTimer} addTimer={addTimer} onClick={performUpdateTask}/>
                     { index < array.length -1  && <Divider /> }
                   </>
                 )

@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import TodoList from "../TodoList";
 import { connect } from "react-redux";
 import { setLoader } from "../../../actions/ui";
-import { fetchTasks } from "../../../actions/tasks";
+import { fetchTasks, postTask, putTask } from "../../../actions/tasks";
+import Timer from "../../../components/Timer";
 
 class TodoListContainer extends Component {
   constructor(props) {
@@ -14,23 +15,33 @@ class TodoListContainer extends Component {
     this.toggleTimer = this.toggleTimer.bind(this);
     this.toggleListItem = this.toggleListItem.bind(this);
     this.performAddTask = this.performAddTask.bind(this);
+    this.performUpdateTask = this.performUpdateTask.bind(this);
   }
 
   componentDidMount() {
-    const __this = this;
+    // const __this = this;
     this.props.fetchTasks();
   }
 
-  toggleTimer(event) {
-    this.setState({
-      hideTimer: event.currentTarget.checked
-    });
+  toggleTimer(item) {
+    console.log("sdfsdfsd" + item.id);
+    // this.setState({
+    //   hideTimer: true
+    // });
+
   }
 
   toggleListItem(event) {
+    console.log("hhhjj");
     this.setState({
       filterApplied: event.currentTarget.checked
     });
+    debugger;
+  };
+
+  performUpdateTask(taskBody, id) {
+    console.log("safasfsaf");
+    return this.props.putTask(taskBody, id);
   }
 
   performAddTask(newTask) {
@@ -49,10 +60,19 @@ class TodoListContainer extends Component {
     //     list: newList
     //   }
     // });
+
+    const newTaskElement = {
+      ...newTask,
+      // _id: token(),
+      "completed": false,
+      "user": "FT"
+    }
+    this.props.AddTask(newTaskElement);
+   
   }
 
   render() {
-    const { filterApplied } = this.state;
+    const { filterApplied, hideTimer } = this.state;
     const { list, loading } = this.props;
     return (
       <TodoList
@@ -62,6 +82,7 @@ class TodoListContainer extends Component {
         toggleTimer={this.toggleTimer}
         toggleListItem={this.toggleListItem}
         performAddTask={this.performAddTask}
+        addTimer={hideTimer}
       />
     )
   }
@@ -76,7 +97,9 @@ const mapStateToProps = state => {
 
 const mapDispacthToProps = dispatch => {
   return {
-    fetchTasks: () => dispatch(fetchTasks({query: {}}))
+    fetchTasks: () => dispatch(fetchTasks({query: {}})),
+    AddTask: (task) => dispatch(postTask({task : task})),
+    putTask: (task, paramId) => dispatch(putTask({ task, paramId })),
   }
 }
 
