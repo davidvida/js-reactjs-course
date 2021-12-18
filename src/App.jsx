@@ -4,6 +4,7 @@ import { BrowserRouter, Link } from "react-router-dom";
 import NavigationBar from "Components/NavigationBar";
 import TasksListPage from "./pages/TaskListPage";
 import SelfTasksListPage from "./pages/SelfTasksListPage";
+import  DashboardPage  from "./pages/DashboardPage";
 import './styles.css';
 import { Provider } from "react-redux";
 
@@ -23,7 +24,7 @@ function App () {
               {/* /tasks/self */}
               <Route path="tasks/self" element={<SelfTasksListPage />} />
               {/* /dashboard */}
-              <Route path="dashboard" element={<div>Dashboard in construction</div>} />
+              <Route path="dashboard" element={<DashboardPage />} />
             </Route>
           </Routes>
         </BrowserRouter>

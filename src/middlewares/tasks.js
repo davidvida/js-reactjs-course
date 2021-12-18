@@ -1,5 +1,5 @@
-import { apiStart, apiPost, apiSelfStart, apiPut, API_FAILURE, API_SUCCESS, POST_SUCCESS } from "../actions/api";
-import { FETCH_TASKS, setTasks, addTasks, ADD_TASKS, SET_TASKS, FETCH_USER_TASKS, PUT_TASK } from "../actions/tasks";
+import { apiStart, apiPost, apiSelfStart, apiPut, dashboardStart, API_FAILURE, API_SUCCESS, POST_SUCCESS, DASHBOARD_SUCCESS } from "../actions/api";
+import { FETCH_TASKS, DASHBOARD_TASKS, setTasks, countTasks, addTasks, ADD_TASKS, SET_TASKS, FETCH_USER_TASKS, PUT_TASK } from "../actions/tasks";
 import { setLoader, setNotification } from "../actions/ui";
 
 // const TASKS_API_GET = "http://localhost:3000/data/tasks.json";
@@ -36,6 +36,13 @@ export const tasksMiddleware = () => (next) => (action) => {
     case API_FAILURE:
       next(setNotification({error: action.payload}));
       next(setLoader(false));
+      break;
+    case DASHBOARD_TASKS:
+      next(dashboardStart({body: null, method: 'GET', url: TASKS_API_GET}));
+      next(setLoader(true));
+      break;
+    case DASHBOARD_SUCCESS:
+      next(countTasks({list: action.payload}));
       break;
   }
 };
