@@ -6,7 +6,7 @@ import TodoListItem from '../TodoListItem';
 import FormAddTask from '../FormAddTask';
 import Toggle from 'Components/Toggle';
 import LoadingIndicator from 'Components/LoadingIndicator';
-import { setShowTaskForm } from "../../../actions/tasks";
+import { setShowTaskForm, apiPostTask } from "../../../actions/tasks";
 import { connect } from 'react-redux';
 
 
@@ -29,8 +29,8 @@ class TodoList extends React.Component {
     this.props.setShowTaskForm(false);
   }
 
-  handleAddTask() {
-    this.props.
+  handleAddTask(task) {
+    this.props.addTask(task);
     this.props.setShowTaskForm(false);
   }
 
@@ -81,6 +81,7 @@ const mapStateToProps = state => {
 const mapDispacthToProps = dispatch => {
   return {
     setShowTaskForm: (showTaskForm) => dispatch(setShowTaskForm(showTaskForm)),
+    addTask: (task) => dispatch(apiPostTask(task)),
   };
 }
 

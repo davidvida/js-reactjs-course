@@ -76,8 +76,7 @@ const mapStateToProps = state => {
 
 const mapDispacthToProps = dispatch => {
   return {
-    fetchTasks: () => dispatch(fetchTasks({query: {}})),
-    addTask: (task) =>  dispatch(addTask({data})),
+    fetchTasks: () => dispatch(fetchTasks({query: {}}))
   };
 }
 
