@@ -5,7 +5,8 @@ const initialState = {
   },
   tasks: {
     data: [],
-    applyFilter: false
+    applyFilter: false,
+    showTaskForm: false,
   }, 
   dashboard: {
     data: []

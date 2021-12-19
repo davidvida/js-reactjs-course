@@ -1,11 +1,14 @@
 import React from 'react';
-import { Container, Divider, List, Paper } from '@mui/material';
+import { Button, Container, Divider, List, Paper, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from '@mui/material';
 // import Timer from '../Timer';
 import Timer from 'Components/TimerFunction';
 import TodoListItem from '../TodoListItem';
 import FormAddTask from '../FormAddTask';
 import Toggle from 'Components/Toggle';
 import LoadingIndicator from 'Components/LoadingIndicator';
+import { setShowTaskForm } from "../../../actions/tasks";
+import { connect } from 'react-redux';
+
 
 /*
 * class based component
@@ -13,27 +16,42 @@ import LoadingIndicator from 'Components/LoadingIndicator';
 class TodoList extends React.Component {
   constructor(props) {
     super(props);
+    this.showAddTaskForm = this.showAddTaskForm.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+    this.handleAddTask = this.handleAddTask.bind(this);
+  }
+  
+  showAddTaskForm() {
+    this.props.setShowTaskForm(!this.props.showTaskForm);
+  };
+
+  handleClose() {
+    this.props.setShowTaskForm(false);
+  }
+
+  handleAddTask() {
+    this.props.
+    this.props.setShowTaskForm(false);
   }
 
   //render method
   render() {
-    const { list, filterApplied, toggleTimer, toggleListItem, performAddTask, showLoader } = this.props;
+    const { list, filterApplied, toggleTimer, toggleListItem, performAddTask, showLoader, showTaskForm } = this.props;
     return (
       <Container>
-        {/* <div>
-          <span>
-            <input type="checkbox" id="hideTimer" onChange={this.toggleTimer} defaultChecked={hideTimer}/>
-            <label htmlFor="hideTimer">Hide Timer</label>
-          </span>
-          { !hideTimer && <Timer /> }
-
-        </div> */}
-        <FormAddTask onSubmitCallback={performAddTask} />
         <LoadingIndicator show={showLoader} />
         { list.length > 0 && (
           <>
             <Toggle active={filterApplied} label="Hide completed" onToggle={toggleListItem} />
-            
+            <Button variant="outlined" onClick={this.showAddTaskForm}>
+              Add New Task
+            </Button>
+            <Dialog open={showTaskForm} onClose={()=>{}}>
+              <DialogTitle>ADD NEW TASK</DialogTitle>
+              <DialogContent>
+                <FormAddTask onSubmitCallback={this.handleAddTask} onCancellCallback={this.handleClose}/>
+              </DialogContent>
+            </Dialog>
             <Paper>
               <List>
               {list.filter(item => (!filterApplied ? true : !item.completed)).map((item, index, array) => {
@@ -54,4 +72,16 @@ class TodoList extends React.Component {
 
 }
 
-export default TodoList;
+const mapStateToProps = state => {
+  return {
+    showTaskForm: state.tasks.showTaskForm,
+  }
+}
+
+const mapDispacthToProps = dispatch => {
+  return {
+    setShowTaskForm: (showTaskForm) => dispatch(setShowTaskForm(showTaskForm)),
+  };
+}
+
+export default connect(mapStateToProps, mapDispacthToProps)(TodoList);

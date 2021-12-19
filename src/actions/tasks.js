@@ -8,6 +8,7 @@ export const TASKS = '[TASKS]';
 export const FETCH_TASKS = `${TASKS} FETCH`;
 // document actions
 export const SET_TASKS = `${TASKS} SET`;
+export const SET_SHOW_TASK_FORM = `${TASKS} SET_SHOW_TASK_FORM`;
 
 export const fetchTasks = ({query}) => ({
   type: FETCH_TASKS,
@@ -17,6 +18,11 @@ export const fetchTasks = ({query}) => ({
 export const setTasks = ({list}) => ({
   type: SET_TASKS,
   payload: list
+});
+
+export const setShowTaskForm = (showTaskForm) => ({
+  type: SET_SHOW_TASK_FORM,
+  payload: showTaskForm
 });
 
 /*
