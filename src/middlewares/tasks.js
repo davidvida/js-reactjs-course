@@ -2,7 +2,7 @@ import { apiStart, API_FAILURE, API_SUCCESS } from "../actions/api";
 import { FETCH_TASKS, setTasks } from "../actions/tasks";
 import { setLoader, setNotification } from "../actions/ui";
 
-const TASKS_API_GET = "http://localhost:3000/data/tasks.json";
+const TASKS_API_GET = "https://davidvida-tasks-service.herokuapp.com/api/v1/task";
 
 export const tasksMiddleware = () => (next) => (action) => {
   next(action);

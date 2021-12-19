@@ -76,8 +76,9 @@ const mapStateToProps = state => {
 
 const mapDispacthToProps = dispatch => {
   return {
-    fetchTasks: () => dispatch(fetchTasks({query: {}}))
-  }
+    fetchTasks: () => dispatch(fetchTasks({query: {}})),
+    addTask: (task) =>  dispatch(addTask({data})),
+  };
 }
 
 export default connect(mapStateToProps, mapDispacthToProps)(TodoListContainer);
