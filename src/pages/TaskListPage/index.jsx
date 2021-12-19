@@ -3,7 +3,7 @@ import TodoListContainer from "./TodoListContainer";
 
 const TasksListPage = () => {
   return (
-    <TodoListContainer />
+    <TodoListContainer userName={"All"} />
   );
 };
 

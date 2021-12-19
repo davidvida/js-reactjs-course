@@ -10,7 +10,8 @@ class TodoListContainer extends Component {
     super(props);
     this.state = {
       filterApplied: false,
-      hideTimer: false
+      hideTimer: false,
+      userName: this.props.userName
     };
     this.toggleTimer = this.toggleTimer.bind(this);
     this.toggleListItem = this.toggleListItem.bind(this);
@@ -28,7 +29,6 @@ class TodoListContainer extends Component {
     // this.setState({
     //   hideTimer: true
     // });
-
   }
 
   toggleListItem(event) {
@@ -39,41 +39,51 @@ class TodoListContainer extends Component {
     debugger;
   };
 
-  performUpdateTask(taskBody, id) {
-    console.log("safasfsaf");
-    return this.props.putTask(taskBody, id);
+  getListByUser() {
+    let listByUser = [];
+    if (!userName === "All") {
+      this.props.list.filter(item => {
+        if (item.user === userName) {
+          listByUser.push(item);
+        }
+      })
+      this.listByUser
+    }
+    return this.props.list.filter
+  };
+
+  performUpdateTask(item) {
+    console.log("safasfsaf" + item._id);
+    let body = {};
+    if (!item.startDate && !item.completed) {
+      body = {
+        "startDate": new Date().toISOString(),
+        "completed": false
+      };
+    } else if (item.startDate && !item.completed) {
+      body = {
+        "endDate": new Date().toISOString(),
+        "completed": true
+      };
+    }
+    return this.props.putTask(body, item._id);
   }
 
   performAddTask(newTask) {
-    /*Challenge
-    * Create a new command action and the necessary actions and middlewares to manage this process
-    */
-    // this.setState(state => {
-    //   const newTaskElement = {
-    //     ...newTask,
-    //     id: this.propsstate.list.length,
-    //     completed: false
-    //   }
-    //   let newList = [...state.list];
-    //   newList.push(newTaskElement);
-    //   return {
-    //     list: newList
-    //   }
-    // });
-
     const newTaskElement = {
       ...newTask,
       // _id: token(),
       "completed": false,
-      "user": "FT"
+      "user": "MV"
     }
     this.props.AddTask(newTaskElement);
-   
+
   }
 
   render() {
-    const { filterApplied, hideTimer } = this.state;
+    const { filterApplied, hideTimer, userName } = this.state;
     const { list, loading } = this.props;
+
     return (
       <TodoList
         list={list}
@@ -83,6 +93,8 @@ class TodoListContainer extends Component {
         toggleListItem={this.toggleListItem}
         performAddTask={this.performAddTask}
         addTimer={hideTimer}
+        performUpdateTask={this.performUpdateTask}
+        userName={this.state.userName}
       />
     )
   }
@@ -97,8 +109,8 @@ const mapStateToProps = state => {
 
 const mapDispacthToProps = dispatch => {
   return {
-    fetchTasks: () => dispatch(fetchTasks({query: {}})),
-    AddTask: (task) => dispatch(postTask({task : task})),
+    fetchTasks: () => dispatch(fetchTasks({ query: {} })),
+    AddTask: (task) => dispatch(postTask({ task: task })),
     putTask: (task, paramId) => dispatch(putTask({ task, paramId })),
   }
 }

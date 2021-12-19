@@ -7,8 +7,9 @@ import './styles.css';
 import { Provider } from "react-redux";
 
 import store from './store';
+import MyTasksListPage from "./pages/TaskListPage/MyTasks";
 
-function App () {
+function App() {
   return (
     <React.StrictMode>
       <Provider store={store()}>
@@ -20,7 +21,7 @@ function App () {
               {/* /tasks */}
               <Route path="tasks" element={<TasksListPage />} />
               {/* /tasks/self */}
-              <Route path="tasks/self" element={<div>My Tasks</div>} />
+              <Route path="tasks/self" element={< MyTasksListPage />} />
               {/* /dashboard */}
               <Route path="dashboard" element={<div>Dashboard in construction</div>} />
             </Route>
