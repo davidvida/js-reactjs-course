@@ -52,6 +52,7 @@ const TodoListItem = ({ name, completed }) => {
           <PlayIcon />
         </IconButton>
       }
+
     >
       <ListItemButton>
         <ListItemIcon>
