@@ -33,14 +33,22 @@ class MyTodoListContainer extends Component {
   }
 
   updateTask(taskID,completedState) {
-    console.log(taskID,completedState)
-    const newData={
-      id:taskID,
-      completed:completedState
+     let data;
+ 
+    if(completedState){
+      data = {
+        id:taskID,
+        completed:completedState,
+        startDate:new Date()
+      }
+    }else{
+      data = {
+        id:taskID,
+        completed:completedState,
+        endDate: new Date()
+      }
     }
-    // debugger
-  this.props.putTask(newData);
-  // debugger
+  this.props.putTask(data);
   this.props.fetchTasks();
   }
 
