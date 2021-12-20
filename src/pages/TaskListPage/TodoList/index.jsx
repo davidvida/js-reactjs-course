@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Divider, List, Paper } from '@mui/material';
+import { Container, Divider, List, Paper, Box, Typography } from '@mui/material';
 // import Timer from '../Timer';
 import Timer from 'Components/TimerFunction';
 import TodoListItem from '../TodoListItem';
@@ -35,11 +35,11 @@ class TodoList extends React.Component {
             <Toggle active={filterApplied} label="Hide completed" onToggle={toggleListItem} />
             
             <Paper>
-              <List>
+              <List key="TodoList">
               {list.filter(item => (!filterApplied ? true : !item.completed)).map((item, index, array) => {
                 return (
                   <>
-                    <TodoListItem key={item.id} completed={item.completed} name={item.name} />
+                    <TodoListItem key={item._id} completed={item.completed} name={item.name} />
                     { index < array.length -1  && <Divider /> }
                   </>
                 )
