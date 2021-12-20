@@ -7,6 +7,7 @@ export const TASKS = '[TASKS]';
 // command actions
 export const FETCH_TASKS = `${TASKS} FETCH`;
 export const POST_TASKS = `${TASKS} POST`;
+export const PUT_TASKS = `${TASKS} PUT`;
 // document actions
 export const SET_TASKS = `${TASKS} SET`;
 
@@ -16,6 +17,11 @@ export const fetchTasks = ({query}) => ({
 });
 
 export const postTasks = ({data}) => ({
+  type: POST_TASKS,
+  payload: data
+});
+
+export const updateTasks = ({data}) => ({
   type: POST_TASKS,
   payload: data
 });

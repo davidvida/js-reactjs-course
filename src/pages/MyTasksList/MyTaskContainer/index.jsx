@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import MyTodoList from "../TodoList";
 import { connect } from "react-redux";
 import { setLoader } from "../../../actions/ui";
-import { fetchTasks } from "../../../actions/tasks";
+import { fetchTasks, updateTasks } from "../../../actions/tasks";
 
 class MyTodoListContainer extends Component {
   constructor(props) {
@@ -31,6 +31,16 @@ class MyTodoListContainer extends Component {
     });
   }
 
+  updateTask(taskID,completedState) {
+    console.log(taskID,completedState)
+    const newData={
+      id:taskID,
+      completed:completedState
+    }
+    debugger
+  this.props.putTask(newData)
+  }
+
   render() {
     const { filterApplied } = this.state;
     const { list, loading } = this.props;
@@ -41,6 +51,7 @@ class MyTodoListContainer extends Component {
         filterApplied={filterApplied}
         toggleTimer={this.toggleTimer}
         toggleListItem={this.toggleListItem}
+        updateTask={this.updateTask}
       />
     )
   }
@@ -56,6 +67,7 @@ const mapStateToProps = state => {
 const mapDispacthToProps = dispatch => {
   return {
     fetchTasks: () => dispatch(fetchTasks({query: {}})),
+    putTask:(newData)=>dispatch(updateTasks({data: newData}))
   }
 }
 

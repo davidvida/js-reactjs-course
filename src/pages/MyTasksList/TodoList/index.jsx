@@ -16,7 +16,7 @@ class MyTodoList extends React.Component {
 
   //render method
   render() {
-    const { list, filterApplied, toggleTimer, toggleListItem, showLoader } = this.props;
+    const { list, filterApplied, toggleTimer, toggleListItem, showLoader, updateTask } = this.props;
     return (
       <Container>
 
@@ -30,7 +30,7 @@ class MyTodoList extends React.Component {
               {list.filter(item => ((!filterApplied ? true : !item.completed) && item.user=="Efrain_Espadero")).map((item, index, array) => {
                 return (
                   <>
-                    <MyTodoListItem key={item.id} completed={item.completed} name={item.name} description={item.description}/>
+                    <MyTodoListItem key={item._id} id={item._id} update={updateTask} completed={item.completed} name={item.name} description={item.description}/>
                     { index < array.length -1  && <Divider /> }
                   </>
                 )

@@ -10,15 +10,21 @@ import styles from './styles';
 import useStyles from "./styles";
 import { Block } from "@mui/icons-material";
 
-const MyTodoListItem = ({ name, completed, description }) => {
+
+// const changeStatus=(test)=>{
+//   console.log(test)
+//  }
+
+const MyTodoListItem = ({ id,name, completed, description,update }) => {
   const classes = useStyles();
+  console.log(update)
   return (
     <ListItem
       disablePadding
       secondaryAction={
-        <IconButton edge="end" aria-label="play">
+        <IconButton edge="end" aria-label="play" onClick={update.bind(null,id,!completed)} >
           <PlayIcon />
-        </IconButton>
+        </IconButton >
       }
     >
       <ListItemButton>
@@ -32,4 +38,5 @@ const MyTodoListItem = ({ name, completed, description }) => {
 };
 
 // export default withStyles(styles)(TodoListItem);
+
 export default MyTodoListItem;
