@@ -35,13 +35,13 @@ function NavigationBar(props) {
       <Divider />
       <List>
         <ListItemLink to="/" label="Landing Page" icon={<HomeIcon />} />
-        <ListItemLink to="/tasks" label="Tasks" icon={<TaskIcon />}/>
-        <ListItemLink to="/tasks/self"label="My Tasks" icon={<TaskIcon />} />
-        <ListItemLink to="/dashboard" label="Dashboard" icon={<DashboardIcon />}/>
+        <ListItemLink to="/tasks" label="Tasks" icon={<TaskIcon />} />
+        <ListItemLink to="/tasks/self" label="My Tasks" icon={<TaskIcon />} />
+        <ListItemLink to="/dashboard" label="Dashboard" icon={<DashboardIcon />} />
       </List>
       <Divider />
       <List>
-        
+
       </List>
     </div>
   );
@@ -69,7 +69,7 @@ function NavigationBar(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Responsive drawer
+            Tasks
           </Typography>
         </Toolbar>
       </AppBar>
