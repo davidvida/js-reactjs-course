@@ -1,18 +1,15 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
 import List from '@mui/material/List';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { Outlet } from 'react-router';
-import { Link } from 'react-router-dom';
 import ListItemLink from 'Components/ListItemLink';
 
 import HomeIcon from '@mui/icons-material/Home';
@@ -38,6 +35,9 @@ function NavigationBar(props) {
         <ListItemLink to="/tasks" label="Tasks" icon={<TaskIcon />}/>
         <ListItemLink to="/tasks/self"label="My Tasks" icon={<TaskIcon />} />
         <ListItemLink to="/dashboard" label="Dashboard" icon={<DashboardIcon />}/>
+        <ListItemLink to="/tasks" label="Tasks" icon={<TaskIcon />} />
+        <ListItemLink to="/tasks/self" label="My Tasks" icon={<TaskIcon />} />
+        <ListItemLink to="/dashboard" label="Dashboard" icon={<DashboardIcon />} />
       </List>
       <Divider />
       <List>
@@ -115,13 +115,5 @@ function NavigationBar(props) {
     </Box>
   );
 }
-
-// ResponsiveDrawer.propTypes = {
-//   /**
-//    * Injected by the documentation to work in an iframe.
-//    * You won't need it on your project.
-//    */
-//   window: PropTypes.func,
-// };
 
 export default NavigationBar;

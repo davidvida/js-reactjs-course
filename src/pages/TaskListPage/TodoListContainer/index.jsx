@@ -9,7 +9,8 @@ class TodoListContainer extends Component {
     this.state = {
       list: [],
       filterApplied: false,
-      hideTimer: false
+      hideTimer: false,
+      userName: this.props.userName
     };
     this.toggleTimer = this.toggleTimer.bind(this);
     this.toggleListItem = this.toggleListItem.bind(this);
@@ -34,6 +35,19 @@ class TodoListContainer extends Component {
       console.error(error);
     });
   }
+
+  getListByUser() {
+    let listByUser = [];
+    if (!userName === "All") {
+      this.props.list.filter(item => {
+        if (item.user === userName) {
+          listByUser.push(item);
+        }
+      })
+      this.listByUser
+    }
+    return this.props.list.filter
+  };
 
   toggleTimer(event) {
     this.setState({
@@ -62,6 +76,23 @@ class TodoListContainer extends Component {
     });
   }
 
+
+  performUpdateTask(item) {
+    let body = {};
+    if (!item.startDate && !item.completed) {
+      body = {
+        "startDate": new Date().toISOString(),
+        "completed": false
+      };
+    } else if (item.startDate && !item.completed) {
+      body = {
+        "endDate": new Date().toISOString(),
+        "completed": true
+      };
+    }
+    return this.props.putTask(body, item._id);
+  }
+
   render() {
     const { filterApplied } = this.state;
     const { list, loading } = this.props;
@@ -73,6 +104,8 @@ class TodoListContainer extends Component {
         toggleTimer={this.toggleTimer}
         toggleListItem={this.toggleListItem}
         performAddTask={this.performAddTask}
+        performUpdateTask={this.performUpdateTask}
+        userName={this.state.userName}
       />
     )
   }
@@ -87,7 +120,8 @@ const mapStateToProps = state => {
 
 const mapDispacthToProps = dispatch => {
   return {
-    setLoaderProp: (show) => dispatch(setLoader(show))
+    fetchTasks: () => dispatch(fetchTasks({ query: {} })),
+    AddTask: (task) => dispatch(postTask({ task: task })),
   }
 }
 
