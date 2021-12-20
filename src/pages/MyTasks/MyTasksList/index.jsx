@@ -29,7 +29,6 @@ class MyTasksList extends Component {
   }
 
   filterBySearchText(items, text){
-      debugger;
       if(text && items.length > 0){
           return items.filter(item => item.user.toLowerCase().includes(text.toLowerCase()));
       }
@@ -37,17 +36,28 @@ class MyTasksList extends Component {
   }
 
   buildDataForReport(list){
-      return {
-          done: 0,
-          pending: 0
+    let doneTask = 0;
+    let pending = 0;
+    if(list.length > 0){
+        list.forEach(element => {
+            if(element.completed){
+                doneTask +=1;
+            }else{
+                pending +=1;
+            }
+        });
       }
+    return {
+        done: doneTask,
+        pending: pending
+    }
   }
 
   //render method
   render() {
     const { list, filterApplied, showLoader, toggleTimer, hideTimer, performStartTask } = this.props;
     const { searchText} = this.state;
-    const filterItems = this.filterBySearchText(list, searchText);
+    let filterItems = this.filterBySearchText(list, searchText);
     return (
       <Container>
         {<div>
@@ -86,8 +96,8 @@ class MyTasksList extends Component {
           </>
         )}
         </Box>
-        <Box sx={{gridColumn: "3/3"}}>
-            <ChartCard data={this.buildDataForReport(list)}/>
+        <Box >
+              <ChartCard data={this.buildDataForReport(filterItems)}/>
         </Box>
         </Box>
       </Container>

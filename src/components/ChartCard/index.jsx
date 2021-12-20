@@ -1,18 +1,27 @@
 import React from "react";
-import { CardContent, CardHeader, Typography, Card } from "@mui/material";
+import Chart from "react-google-charts";
 
 const ChartCard = ({ data }) => {
 
     return (
-      <Card>
-          <CardHeader></CardHeader>
-          <CardContent></CardContent>
-          <Typography variant="h5">Done: {data.done}</Typography>
-          <Typography variant="h5">In Progress: {data.pending}</Typography>
-      </Card>
+        <Chart
+        width={'500px'}
+        height={'300px'}
+        chartType="PieChart"
+        loader={<div>Loading Chart</div>}
+        data={[
+            ['Task', 'Hours per Day'],
+            ['Done', data.done],
+            ['Pending', data.pending],
+        ]}
+        options={{
+            title: 'My Task Percentage',
+            is3D: true,
+        }}
+        rootProps={{ 'data-testid': '2' }}
+        />
     )
   };
   
-  // export default withStyles(styles)(TodoListItem);
   export default ChartCard;
   

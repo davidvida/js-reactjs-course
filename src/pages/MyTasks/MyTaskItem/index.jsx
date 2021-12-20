@@ -9,15 +9,14 @@ const MyTaskItem = ({name, completed, completedItem, onChangeCallback}) => {
   const classes = useStyles();
 
   const handleItemStatus = (item) => {
-    debugger;
     var newTaskElement = null;
+    var type = "";
     if(item.startDate === null){
       newTaskElement = {
         ...item,
         startDate: new Date()
       }
-      //this.props.timerTask(true);
-      //this.props.updateTask(newTaskElement);
+      type = "start";
     }else{
       if(item.startDate !== null && item.endDate === null){
         newTaskElement = {
@@ -25,9 +24,10 @@ const MyTaskItem = ({name, completed, completedItem, onChangeCallback}) => {
             completed: true,
             endDate: new Date()
         }
+        type = "end";
       }
     }
-    onChangeCallback(newTaskElement);
+    onChangeCallback(newTaskElement, type);
   };
 
   return (

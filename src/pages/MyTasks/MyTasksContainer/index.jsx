@@ -25,11 +25,17 @@ class MyTasksContainer extends Component {
     });
   }
 
-  performStartTask(newTaskElement) {
+  performStartTask(newTaskElement, type) {
     if(newTaskElement !== null){
-        this.setState({
-            hideTimer: true
-        });
+        if(type === "start"){
+            this.setState({
+                hideTimer: true
+            });
+        }else{
+            this.setState({
+                hideTimer: false
+            });
+        }
         this.props.updateTask(newTaskElement);
     }
     this.props.fetchTasks();
