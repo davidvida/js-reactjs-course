@@ -1,5 +1,5 @@
 import React from "react";
-import { IconButton, ListItem, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
+import { Chip, IconButton, ListItem, ListItemButton, ListItemIcon, ListItemText, Typography } from "@mui/material";
 import PlayIcon from '@mui/icons-material/PlayCircleOutlined'
 import CompletedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
 import PendingIcon from '@mui/icons-material/PendingOutlined';
@@ -42,7 +42,7 @@ import styles from './styles';
 */
 import useStyles from "./styles";
 
-const TodoListItem = ({ name, completed }) => {
+const TodoListItem = ({ name, completed, description, user, startDate, endDate, labels }) => {
   const classes = useStyles();
   return (
     <ListItem
@@ -57,7 +57,24 @@ const TodoListItem = ({ name, completed }) => {
         <ListItemIcon>
           { completed ? <CompletedIcon className={classes.icon} /> : <PendingIcon /> }
         </ListItemIcon>
-        <ListItemText primary={name} />
+        <ListItemText primary={startDate ? `${user}:  ${new Date(startDate).toLocaleDateString()} - ${new Date(endDate).toLocaleDateString()}` : user } secondary={
+            <React.Fragment>
+              <Typography
+                sx={{ display: 'inline' }}
+                component="span"
+                variant="body2"
+                color="text.primary"
+              >
+              {`${name} - ` }
+              </Typography>
+              {description}
+            </React.Fragment>
+          } />
+          {labels.length > 0 && labels.map((label) => {
+            return (
+              <Chip label={label} />
+            )
+          })}
       </ListItemButton>
     </ListItem>
   )
