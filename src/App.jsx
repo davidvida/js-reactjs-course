@@ -20,7 +20,7 @@ function App () {
               {/* /tasks */}
               <Route path="tasks" element={<TasksListPage />} />
               {/* /tasks/self */}
-              <Route path="tasks/self" element={<div>My Tasks</div>} />
+              <Route path="tasks/self" element={<TasksListPage filter={{user: 'Gary'}}/>} />
               {/* /dashboard */}
               <Route path="dashboard" element={<div>Dashboard in construction</div>} />
             </Route>

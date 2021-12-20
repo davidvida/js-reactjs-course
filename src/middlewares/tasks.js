@@ -8,7 +8,7 @@ export const tasksMiddleware = () => (next) => (action) => {
   next(action);
   switch(action.type) {
     case FETCH_TASKS:
-      next(apiStart({body: null, method: 'GET', url: TASKS_API}));
+      next(apiStart({body: null, method: 'GET', url: TASKS_API, query: action.payload}));
       next(setLoader(true));
       break;
     case API_POST_TASK:

@@ -6,11 +6,11 @@ export const API_SUCCESS = 'API_SUCCESS';
 export const API_POST_TASK_SUCCESS = 'API_POST_TASK_SUCCESS';
 export const API_FAILURE = 'API_FAILURE';
 
-export const apiStart = ({body, method, url}) =>  {
+export const apiStart = ({body, method, url, query}) =>  {
   return {
     type: API_START,
     payload: body,
-    meta: {method, url}
+    meta: {method, url, query}
   }
 };
 

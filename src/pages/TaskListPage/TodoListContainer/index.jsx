@@ -18,7 +18,19 @@ class TodoListContainer extends Component {
 
   componentDidMount() {
     const __this = this;
-    this.props.fetchTasks();
+    this.props.fetchTasks(this.props.filter);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.filter !== this.props.filter) {
+      console.log(prevProps);
+      console.log(this.props);
+      if (this.props.filter) {
+        this.props.fetchTasks(this.props.filter);
+      } else {
+        this.props.fetchTasks();
+      }
+    }
   }
 
   toggleTimer(event) {
@@ -76,7 +88,7 @@ const mapStateToProps = state => {
 
 const mapDispacthToProps = dispatch => {
   return {
-    fetchTasks: () => dispatch(fetchTasks({query: {}}))
+    fetchTasks: (query) => dispatch(fetchTasks({query: query}))
   };
 }
 
