@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import TodoList from "../TodoList";
 import { connect } from "react-redux";
-import { setLoader } from "../../../actions/ui";
 import { fetchTasks } from "../../../actions/tasks";
 
 class TodoListContainer extends Component {
@@ -13,7 +12,6 @@ class TodoListContainer extends Component {
     };
     this.toggleTimer = this.toggleTimer.bind(this);
     this.toggleListItem = this.toggleListItem.bind(this);
-    this.performAddTask = this.performAddTask.bind(this);
   }
 
   componentDidMount() {
@@ -23,8 +21,6 @@ class TodoListContainer extends Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.filter !== this.props.filter) {
-      console.log(prevProps);
-      console.log(this.props);
       if (this.props.filter) {
         this.props.fetchTasks(this.props.filter);
       } else {
@@ -45,24 +41,6 @@ class TodoListContainer extends Component {
     });
   }
 
-  performAddTask(newTask) {
-    /*Challenge
-    * Create a new command action and the necessary actions and middlewares to manage this process
-    */
-    // this.setState(state => {
-    //   const newTaskElement = {
-    //     ...newTask,
-    //     id: this.propsstate.list.length,
-    //     completed: false
-    //   }
-    //   let newList = [...state.list];
-    //   newList.push(newTaskElement);
-    //   return {
-    //     list: newList
-    //   }
-    // });
-  }
-
   render() {
     const { filterApplied } = this.state;
     const { list, loading } = this.props;
@@ -73,7 +51,6 @@ class TodoListContainer extends Component {
         filterApplied={filterApplied}
         toggleTimer={this.toggleTimer}
         toggleListItem={this.toggleListItem}
-        performAddTask={this.performAddTask}
       />
     )
   }

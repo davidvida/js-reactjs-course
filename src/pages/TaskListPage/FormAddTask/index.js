@@ -10,7 +10,7 @@ import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
 const FormAddTask = ({ onSubmitCallback, onCancellCallback }) => {
   const [taskName, setTaskName] = useState("");
   const [taskDescription, setTaskDescription] = useState("");
-  const [taskUser, setTaskUser] = useState("");
+  const [taskUser, setTaskUser] = useState("Gary");
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(null);
   const [labels, setLabels] = useState([]);
@@ -58,7 +58,6 @@ const FormAddTask = ({ onSubmitCallback, onCancellCallback }) => {
             required
           />
           <TextField
-            autoFocus
             margin="dense"
             id="description"
             label="Task Description"
@@ -67,12 +66,12 @@ const FormAddTask = ({ onSubmitCallback, onCancellCallback }) => {
             onChange={onChangeDescription}
           />
           <TextField
-            autoFocus
             margin="dense"
             id="user"
             label="User"
             fullWidth
             variant="standard"
+            defaultValue={taskUser}
             onChange={onChangeUser}
           />
           <LocalizationProvider dateAdapter={AdapterDateFns}>

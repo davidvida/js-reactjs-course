@@ -1,5 +1,5 @@
-import { apiPostTask, apiStart, API_FAILURE, API_POST_TASK_SUCCESS, API_SUCCESS } from "../actions/api";
-import { ADD_TASK, FETCH_TASKS, setShowTaskForm, setTasks, SET_SHOW_TASK_FORM, addTask, API_POST_TASK } from "../actions/tasks";
+import { apiPostTask, apiPutTask, apiStart, API_FAILURE, API_POST_TASK_SUCCESS, API_PUT_TASK_SUCCESS, API_SUCCESS } from "../actions/api";
+import { ADD_TASK, FETCH_TASKS, setShowTaskForm, setTasks, SET_SHOW_TASK_FORM, addTask, API_POST_TASK, API_PUT_TASK, updateTask } from "../actions/tasks";
 import { setLoader, setNotification } from "../actions/ui";
 
 const TASKS_API = "https://davidvida-tasks-service.herokuapp.com/api/v1/task";
@@ -23,6 +23,14 @@ export const tasksMiddleware = () => (next) => (action) => {
       next(addTask({task: action.payload}));
       next(setLoader(false));
       break;
+    case API_PUT_TASK_SUCCESS:
+      console.log(action);
+      next(updateTask({task: action.payload}));
+      next(setLoader(false));
+      break;
+    case API_PUT_TASK:
+      next(apiPutTask({body: action.payload, method: 'PUT', url: `${TASKS_API}/${action.payload._id}`}));
+      next(setLoader(true));
     case API_FAILURE:
       next(setNotification({error: action.payload}));
       next(setLoader(false));

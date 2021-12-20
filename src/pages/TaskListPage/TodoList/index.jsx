@@ -18,7 +18,7 @@ import TodoListItem from "../TodoListItem";
 import FormAddTask from "../FormAddTask";
 import Toggle from "Components/Toggle";
 import LoadingIndicator from "Components/LoadingIndicator";
-import { setShowTaskForm, apiPostTask } from "../../../actions/tasks";
+import { setShowTaskForm, apiPostTask, apiPutTask } from "../../../actions/tasks";
 import { connect } from "react-redux";
 
 /*
@@ -30,6 +30,7 @@ class TodoList extends React.Component {
     this.showAddTaskForm = this.showAddTaskForm.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleAddTask = this.handleAddTask.bind(this);
+    this.onPlayClick = this.onPlayClick.bind(this);
   }
 
   showAddTaskForm() {
@@ -43,6 +44,10 @@ class TodoList extends React.Component {
   handleAddTask(task) {
     this.props.addTask(task);
     this.props.setShowTaskForm(false);
+  }
+
+  onPlayClick(task) {
+    this.props.updateTask(task);
   }
 
   //render method
@@ -86,14 +91,8 @@ class TodoList extends React.Component {
                     return (
                       <>
                         <TodoListItem
-                          key={item.id}
-                          completed={item.completed}
-                          name={item.name}
-                          description={item.description}
-                          user={item.user}
-                          startDate={item.startDate}
-                          endDate={item.endDate}
-                          labels={item.labels}
+                          item={item}
+                          onPlayClick={this.onPlayClick}
                         />
                         {index < array.length - 1 && <Divider />}
                       </>
@@ -118,6 +117,7 @@ const mapDispacthToProps = (dispatch) => {
   return {
     setShowTaskForm: (showTaskForm) => dispatch(setShowTaskForm(showTaskForm)),
     addTask: (task) => dispatch(apiPostTask(task)),
+    updateTask: (task) => dispatch(apiPutTask(task))
   };
 };
 

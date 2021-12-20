@@ -6,50 +6,23 @@ import PendingIcon from '@mui/icons-material/PendingOutlined';
 /* styles import */
 import { withStyles } from "@mui/styles";
 import styles from './styles';
-
-/*
-* class based component
-*/
-// class TodoListItem extends React.Component {
-//   constructor(props) {
-//     super(props);
-//   }
-
-//   render() {
-//     const { name, completed, classes } = this.props;
-//     return (
-//       <ListItem
-//         disablePadding
-//         secondaryAction={
-//           <IconButton edge="end" aria-label="play">
-//             <PlayIcon />
-//           </IconButton>
-//         }
-//       >
-//         <ListItemButton>
-//           <ListItemIcon>
-//             { completed ? <CompletedIcon className={classes.icon} /> : <PendingIcon /> }
-//           </ListItemIcon>
-//           <ListItemText primary={name} />
-//         </ListItemButton>
-//       </ListItem>
-//     )
-//   }
-// }
-
-/*
-* function component
-*/
 import useStyles from "./styles";
 
-const TodoListItem = ({ name, completed, description, user, startDate, endDate, labels }) => {
+const TodoListItem = ({item, onPlayClick}) => {
+  const { name, completed, description, user, startDate, endDate, labels } = item;
   const classes = useStyles();
+  const handleOnPlayClick = () => {
+    onPlayClick({
+      ...item,
+      completed: !item.completed
+    });
+  }
   return (
     <ListItem
       disablePadding
       secondaryAction={
         <IconButton edge="end" aria-label="play">
-          <PlayIcon />
+          <PlayIcon onClick={handleOnPlayClick} />
         </IconButton>
       }
     >
