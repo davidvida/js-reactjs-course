@@ -2,33 +2,24 @@ import React from 'react';
 import { Container, Divider, List, Paper } from '@mui/material';
 // import Timer from '../Timer';
 import Timer from 'Components/TimerFunction';
-import TodoListItem from '../TodoListItem';
-import FormAddTask from '../FormAddTask';
+import MyTodoListItem from '../TodoListItem';
 import Toggle from 'Components/Toggle';
 import LoadingIndicator from 'Components/LoadingIndicator';
 
 /*
 * class based component
 */
-class TodoList extends React.Component {
+class MyTodoList extends React.Component {
   constructor(props) {
     super(props);
   }
 
   //render method
   render() {
-    const { list, filterApplied, toggleTimer, toggleListItem, performAddTask, showLoader } = this.props;
+    const { list, filterApplied, toggleTimer, toggleListItem, showLoader } = this.props;
     return (
       <Container>
-        {/* <div>
-          <span>
-            <input type="checkbox" id="hideTimer" onChange={this.toggleTimer} defaultChecked={hideTimer}/>
-            <label htmlFor="hideTimer">Hide Timer</label>
-          </span>
-          { !hideTimer && <Timer /> }
 
-        </div> */}
-        <FormAddTask onSubmitCallback={performAddTask} />
         <LoadingIndicator show={showLoader} />
         { list.length > 0 && (
           <>
@@ -36,10 +27,10 @@ class TodoList extends React.Component {
             
             <Paper>
               <List>
-              {list.filter(item => (!filterApplied ? true : !item.completed)).map((item, index, array) => {
+              {list.filter(item => ((!filterApplied ? true : !item.completed) && item.user=="Efrain_Espadero")).map((item, index, array) => {
                 return (
                   <>
-                    <TodoListItem key={item.id} completed={item.completed} name={item.name} description={item.description}/>
+                    <MyTodoListItem key={item.id} completed={item.completed} name={item.name} description={item.description}/>
                     { index < array.length -1  && <Divider /> }
                   </>
                 )
@@ -54,4 +45,4 @@ class TodoList extends React.Component {
 
 }
 
-export default TodoList;
+export default MyTodoList;
