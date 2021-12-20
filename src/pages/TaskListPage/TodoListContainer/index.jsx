@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import TodoList from "../TodoList";
 import { connect } from "react-redux";
 import { setLoader } from "../../../actions/ui";
-import { fetchTasks } from "../../../actions/tasks";
+import { fetchTasks, setTasks, putTask, postTask } from "../../../actions/tasks";
 
 class TodoListContainer extends Component {
   constructor(props) {
@@ -14,6 +14,8 @@ class TodoListContainer extends Component {
     this.toggleTimer = this.toggleTimer.bind(this);
     this.toggleListItem = this.toggleListItem.bind(this);
     this.performAddTask = this.performAddTask.bind(this);
+    this.performUpdateTask = this.performUpdateTask.bind(this);
+    this.getList = this.getList.bind(this);
   }
 
   componentDidMount() {
@@ -34,22 +36,29 @@ class TodoListContainer extends Component {
   }
 
   performAddTask(newTask) {
-    /*Challenge
-    * Create a new command action and the necessary actions and middlewares to manage this process
-    */
-    // this.setState(state => {
-    //   const newTaskElement = {
-    //     ...newTask,
-    //     id: this.propsstate.list.length,
-    //     completed: false
-    //   }
-    //   let newList = [...state.list];
-    //   newList.push(newTaskElement);
-    //   return {
-    //     list: newList
-    //   }
-    // });
+    return this.props.postTask(newTask);
   }
+
+  performUpdateTask(item) {
+    console.log("ID:" + item._id);
+    let body = {};
+    if (!item.startDate && !item.completed) {
+      body = {
+        "startDate": new Date().toISOString(),
+        "completed": false
+      };
+    } else if (item.startDate && !item.completed) {
+      body = {
+        "endDate": new Date().toISOString(),
+        "completed": true
+      };
+    }
+    return this.props.putTask(body, item._id);
+  }
+
+  getList() {
+    return this.props.list.filter
+  };
 
   render() {
     const { filterApplied } = this.state;
@@ -68,6 +77,7 @@ class TodoListContainer extends Component {
 }
 
 const mapStateToProps = state => {
+console.log('From UI:', state)
   return {
     loading: state.ui.loading,
     list: state.tasks.data
@@ -76,7 +86,11 @@ const mapStateToProps = state => {
 
 const mapDispacthToProps = dispatch => {
   return {
-    fetchTasks: () => dispatch(fetchTasks({query: {}}))
+    fetchTasks: () => dispatch(fetchTasks({query: {}})),
+    setLoaderProp: (show) => dispatch(setLoader(show)),
+    setTasksProp: (list) => dispatch(setTasks(list)),
+    postTask: (task) => dispatch(postTask({ task })),
+    putTask: (task, paramId) => dispatch(putTask({ task, paramId }))
   }
 }
 

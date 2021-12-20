@@ -1,11 +1,12 @@
 const initialState = {
   ui: {
     loading: false,
-    notifcations: []
+    notifications: []
   },
   tasks: {
     data: [],
-    applyFilter: false
+    applyFilter: false,
+    hideTimer: false
   }, 
   dashboard: {
     data: []

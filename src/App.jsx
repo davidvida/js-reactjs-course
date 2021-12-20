@@ -3,6 +3,9 @@ import { Route, Routes, Outlet } from 'react-router';
 import { BrowserRouter, Link } from "react-router-dom";
 import NavigationBar from "Components/NavigationBar";
 import TasksListPage from "./pages/TaskListPage";
+import UserTaskListPage from "./pages/UserTaskListPage";
+import DashboardPage from "./pages/DashboardPage";
+
 import './styles.css';
 import { Provider } from "react-redux";
 
@@ -20,9 +23,9 @@ function App () {
               {/* /tasks */}
               <Route path="tasks" element={<TasksListPage />} />
               {/* /tasks/self */}
-              <Route path="tasks/self" element={<div>My Tasks</div>} />
+              <Route path="tasks/:user" element={<UserTaskListPage />} />
               {/* /dashboard */}
-              <Route path="dashboard" element={<div>Dashboard in construction</div>} />
+              <Route path="dashboard" element={<DashboardPage />} />
             </Route>
           </Routes>
         </BrowserRouter>
