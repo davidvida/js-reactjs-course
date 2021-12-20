@@ -1,28 +1,22 @@
 import React from 'react';
 import { Container, Divider, List, Paper } from '@mui/material';
-// import Timer from '../Timer';
-import Timer from 'Components/TimerFunction';
-import TodoListItem from '../TodoListItem';
-import FormAddTask from '../FormAddTask';
+import TodoListItem from '../../TaskListPage/TodoListItem';
 import Toggle from 'Components/Toggle';
+import FormAddTask from '../../TaskListPage/FormAddTask';
 import LoadingIndicator from 'Components/LoadingIndicator';
 
-/*
-* class based component
-*/
-class TodoList extends React.Component {
+class MyTodoList extends React.Component {
   constructor(props) {
     super(props);
   }
 
-  //render method
   render() {
-    const { list, filterApplied, toggleTimer, toggleListItem, performAddTask, performUpdateTask, showLoader } = this.props;
+    const { list, filterApplied, toggleListItem,performAddTask, showLoader, performUpdateTask } = this.props;
     return (
       <Container>
-      <FormAddTask onSubmitCallback={performAddTask} />
+        <FormAddTask onSubmitCallback={performAddTask} />
         <LoadingIndicator show={showLoader} />
-        { list.length > 0 && (
+        { list && list.length > 0 && (
           <>
             <Toggle active={filterApplied} label="Hide completed" onToggle={toggleListItem} />
             
@@ -52,4 +46,4 @@ class TodoList extends React.Component {
 
 }
 
-export default TodoList;
+export default MyTodoList;
