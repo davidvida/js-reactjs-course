@@ -11,18 +11,13 @@ import useStyles from "./styles";
 import { Block } from "@mui/icons-material";
 
 
-// const changeStatus=(test)=>{
-//   console.log(test)
-//  }
-
-const MyTodoListItem = ({ id,name, completed, description,update }) => {
+const MyTodoListItem = ({ id,name, completed, description, updateTask}) => {
   const classes = useStyles();
-  console.log(update)
   return (
     <ListItem
       disablePadding
       secondaryAction={
-        <IconButton edge="end" aria-label="play" onClick={update.bind(null,id,!completed)} >
+        <IconButton edge="end" aria-label="play" onClick={updateTask.bind(null,id,!completed)} >
           <PlayIcon />
         </IconButton >
       }

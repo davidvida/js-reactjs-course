@@ -22,7 +22,7 @@ export const postTasks = ({data}) => ({
 });
 
 export const updateTasks = ({data}) => ({
-  type: POST_TASKS,
+  type: PUT_TASKS,
   payload: data
 });
 

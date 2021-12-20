@@ -27,10 +27,10 @@ class MyTodoList extends React.Component {
             
             <Paper>
               <List>
-              {list.filter(item => ((!filterApplied ? true : !item.completed) && item.user=="Efrain_Espadero")).map((item, index, array) => {
+              {list.filter(itemFilter => ((!filterApplied ? true : !itemFilter.completed) && itemFilter.user=="Efrain_Espadero")).map((item, index, array) => {
                 return (
                   <>
-                    <MyTodoListItem key={item._id} id={item._id} update={updateTask} completed={item.completed} name={item.name} description={item.description}/>
+                    <MyTodoListItem key={item._id} id={item._id} updateTask={updateTask} completed={item.completed} name={item.name} description={item.description}/>
                     { index < array.length -1  && <Divider /> }
                   </>
                 )

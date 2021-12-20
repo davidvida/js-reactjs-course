@@ -13,6 +13,7 @@ class MyTodoListContainer extends Component {
     };
     this.toggleTimer = this.toggleTimer.bind(this);
     this.toggleListItem = this.toggleListItem.bind(this);
+    this.updateTask= this.updateTask.bind(this);
   }
 
   componentDidMount() {
@@ -37,8 +38,10 @@ class MyTodoListContainer extends Component {
       id:taskID,
       completed:completedState
     }
-    debugger
-  this.props.putTask(newData)
+    // debugger
+  this.props.putTask(newData);
+  // debugger
+  this.props.fetchTasks();
   }
 
   render() {
@@ -67,7 +70,7 @@ const mapStateToProps = state => {
 const mapDispacthToProps = dispatch => {
   return {
     fetchTasks: () => dispatch(fetchTasks({query: {}})),
-    putTask:(newData)=>dispatch(updateTasks({data: newData}))
+    putTask: (newData) => dispatch(updateTasks({data: newData}))
   }
 }
 

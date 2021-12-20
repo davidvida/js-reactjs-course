@@ -8,22 +8,20 @@ export const tasksMiddleware = () => (next) => (action) => {
   next(action);
   switch(action.type) {
     case PUT_TASKS:
-       debugger
+      debugger
       next(apiStart({body: JSON.stringify(action.payload), method: 'PUT', url: TASKS_API_GET+`/${action.payload.id}`}));
-  //    next(setLoader(true));
+      //   debugger
+      // next(apiStart({body: null, method: 'GET', url: TASKS_API_GET}));
+      // debugger
       break;
     case POST_TASKS:
-      // debugger
       next(apiStart({body: JSON.stringify(action.payload), method: 'POST', url: TASKS_API_GET}));
-  //    next(setLoader(true));
       break;
     case FETCH_TASKS:
-  //    debugger
       next(apiStart({body: null, method: 'GET', url: TASKS_API_GET}));
       next(setLoader(true));
       break;
     case API_SUCCESS:
-  //    debugger
       next(setTasks({list: action.payload}));
       next(setLoader(false));
       break;
