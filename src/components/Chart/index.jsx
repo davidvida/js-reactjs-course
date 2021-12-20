@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { EventTracker } from '@devexpress/dx-react-chart';
 import Paper from '@material-ui/core/Paper';
 import {
     Chart,
@@ -7,13 +8,13 @@ import {
     Title,
     Tooltip,
 } from '@devexpress/dx-react-chart-material-ui';
+
 import { Animation } from '@devexpress/dx-react-chart';
 
 
 
 
 const ChartPie = ({ list }) => {
-    console.log("dfsdfsdf////**---" + list instanceof Array)
     const chartData = [
         {
             title: "Completed",
@@ -43,9 +44,11 @@ const ChartPie = ({ list }) => {
                 />
 
                 <Animation />
+                <EventTracker />
                 <Tooltip />
                 <Legend
                     position={'bottom'} />
+
             </Chart>
         </Paper>
     );

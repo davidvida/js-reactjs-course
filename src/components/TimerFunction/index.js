@@ -11,7 +11,7 @@ const TimerFunction = () => {
       setTime(new Date());
     }, 1000);
 
-  //callback to execute after unmount component
+    //callback to execute after unmount component
     return () => {
       clearInterval(intervalRef.current);
     }
