@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import TodoList from "../TodoList";
 import { connect } from "react-redux";
-import { setLoader } from "../../../actions/ui";
 import { fetchTasks } from "../../../actions/tasks";
 
 class TodoListContainer extends Component {
@@ -13,12 +12,21 @@ class TodoListContainer extends Component {
     };
     this.toggleTimer = this.toggleTimer.bind(this);
     this.toggleListItem = this.toggleListItem.bind(this);
-    this.performAddTask = this.performAddTask.bind(this);
   }
 
   componentDidMount() {
     const __this = this;
-    this.props.fetchTasks();
+    this.props.fetchTasks(this.props.filter);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.filter !== this.props.filter) {
+      if (this.props.filter) {
+        this.props.fetchTasks(this.props.filter);
+      } else {
+        this.props.fetchTasks();
+      }
+    }
   }
 
   toggleTimer(event) {
@@ -33,24 +41,6 @@ class TodoListContainer extends Component {
     });
   }
 
-  performAddTask(newTask) {
-    /*Challenge
-    * Create a new command action and the necessary actions and middlewares to manage this process
-    */
-    // this.setState(state => {
-    //   const newTaskElement = {
-    //     ...newTask,
-    //     id: this.propsstate.list.length,
-    //     completed: false
-    //   }
-    //   let newList = [...state.list];
-    //   newList.push(newTaskElement);
-    //   return {
-    //     list: newList
-    //   }
-    // });
-  }
-
   render() {
     const { filterApplied } = this.state;
     const { list, loading } = this.props;
@@ -61,7 +51,6 @@ class TodoListContainer extends Component {
         filterApplied={filterApplied}
         toggleTimer={this.toggleTimer}
         toggleListItem={this.toggleListItem}
-        performAddTask={this.performAddTask}
       />
     )
   }
@@ -76,8 +65,8 @@ const mapStateToProps = state => {
 
 const mapDispacthToProps = dispatch => {
   return {
-    fetchTasks: () => dispatch(fetchTasks({query: {}}))
-  }
+    fetchTasks: (query) => dispatch(fetchTasks({query: query}))
+  };
 }
 
 export default connect(mapStateToProps, mapDispacthToProps)(TodoListContainer);

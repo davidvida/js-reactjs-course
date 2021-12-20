@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import TodoListContainer from "./TodoListContainer";
 
-const TasksListPage = () => {
+const TasksListPage = ({filter}) => {
   return (
-    <TodoListContainer />
+    <TodoListContainer filter={filter}/>
   );
 };
 

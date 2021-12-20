@@ -1,43 +1,100 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
+import { Button, Stack, TextField } from '@mui/material';
+import DateAdapter from '@mui/lab/AdapterMoment';
 
-const FormAddTask = ({ onSubmitCallback }) => {
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
+
+
+const FormAddTask = ({ onSubmitCallback, onCancellCallback }) => {
   const [taskName, setTaskName] = useState("");
-  const inputRef = useRef();
-
-  useEffect(() => {
-    inputRef.current.focus();
-  }, []);
+  const [taskDescription, setTaskDescription] = useState("");
+  const [taskUser, setTaskUser] = useState("Gary");
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(null);
+  const [labels, setLabels] = useState([]);
 
   const onChangeName = (event) => {
     setTaskName(event.target.value);
   }
 
-  const onSubmitListener = (event) => {
+  const onChangeDescription = (event) => {
+    setTaskDescription(event.target.value);
+  }
+  
+  const onChangeUser = (event) => {
+    setTaskUser(event.target.value);
+  }
+
+  const onAddTask = (event) => {
     event.preventDefault();
-    onSubmitCallback({
-      name: taskName
-    });
-    setTaskName("");
+    if (taskName) {
+      onSubmitCallback({
+        name: taskName,
+        description: taskDescription,
+        startDate,
+        endDate,
+        labels,
+        user: taskUser
+      });
+      setTaskName("");
+      setTaskDescription("");
+      setTaskUser("");
+    }
   };
 
   return (
-    <form onSubmit={onSubmitListener}>
+    <form>
       <div>
-        <label htmlFor="taskName">Task Name</label>
-        <input
-          type="text"
-          id="taskName"
-          name="name"
-          autoComplete="off"
-          ref={inputRef}
-          value={taskName}
-          onChange={onChangeName} />
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="Task Name"
+            fullWidth
+            variant="standard"
+            onChange={onChangeName}
+            required
+          />
+          <TextField
+            margin="dense"
+            id="description"
+            label="Task Description"
+            fullWidth
+            variant="standard"
+            onChange={onChangeDescription}
+          />
+          <TextField
+            margin="dense"
+            id="user"
+            label="User"
+            fullWidth
+            variant="standard"
+            defaultValue={taskUser}
+            onChange={onChangeUser}
+          />
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <Stack spacing={3}>
+              <DesktopDatePicker
+                label='Start Date'
+                inputFormat="dd/MM/yyyy"
+                value={startDate}
+                onChange={setStartDate}
+                renderInput={(params) => <TextField {...params} />}
+              />
+              <DesktopDatePicker
+                label='End Date'
+                inputFormat="dd/MM/yyyy"
+                value={endDate}
+                onChange={setEndDate}
+                renderInput={(params) => <TextField {...params} />}
+              />
+            </Stack>
+          </LocalizationProvider>
       </div>
-      <div>
-        <button type="submit" id="submitForm">
-          Add Task
-        </button>
-      </div>
+      <Button onClick={onCancellCallback}>Cancel</Button>
+      <Button onClick={onAddTask}>Add Task</Button>
     </form>
   );
 };
