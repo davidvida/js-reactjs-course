@@ -8,6 +8,8 @@ export const TASKS = '[TASKS]';
 export const FETCH_TASKS = `${TASKS} FETCH`;
 // document actions
 export const SET_TASKS = `${TASKS} SET`;
+export const POST_TASK = `${TASKS} POST`;
+export const PUT_TASK = `${TASKS} PUT`;
 
 export const fetchTasks = ({query}) => ({
   type: FETCH_TASKS,
@@ -18,6 +20,18 @@ export const setTasks = ({list}) => ({
   type: SET_TASKS,
   payload: list
 });
+
+export const postTask = ({item}) => ({
+  type: POST_TASK,
+  payload: item
+});
+
+export const putTask = ({taskId, item}) => ({
+  taskId: taskId,
+  type: PUT_TASK,
+  payload: item
+});
+
 
 /*
 FETCH_TASKS -> API_START  -> API_SUCCESS -> SET_TASKS

@@ -2,22 +2,25 @@ import React, { Component } from "react";
 import TodoList from "../TodoList";
 import { connect } from "react-redux";
 import { setLoader } from "../../../actions/ui";
-import { fetchTasks } from "../../../actions/tasks";
+import { fetchTasks,postTask,putTask } from "../../../actions/tasks";
 
 class TodoListContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      filterApplied: false,
-      hideTimer: false
+      filter: {
+        filterApplied: false,
+        user: this.props.user
+      }
     };
     this.toggleTimer = this.toggleTimer.bind(this);
     this.toggleListItem = this.toggleListItem.bind(this);
     this.performAddTask = this.performAddTask.bind(this);
+    this.performUpdateTask = this.performUpdateTask.bind(this);
+    this.currentUser = "joel chambilla"
   }
 
   componentDidMount() {
-    const __this = this;
     this.props.fetchTasks();
   }
 
@@ -28,40 +31,43 @@ class TodoListContainer extends Component {
   }
 
   toggleListItem(event) {
-    this.setState({
-      filterApplied: event.currentTarget.checked
-    });
+    const toggleChecked = event.currentTarget.checked;
+    this.setState(prevState => ({
+      filter : {
+        ...prevState.filter,
+        filterApplied: toggleChecked
+      }
+    }));
   }
 
   performAddTask(newTask) {
-    /*Challenge
-    * Create a new command action and the necessary actions and middlewares to manage this process
-    */
-    // this.setState(state => {
-    //   const newTaskElement = {
-    //     ...newTask,
-    //     id: this.propsstate.list.length,
-    //     completed: false
-    //   }
-    //   let newList = [...state.list];
-    //   newList.push(newTaskElement);
-    //   return {
-    //     list: newList
-    //   }
-    // });
+    const newTaskElement = {
+      id: this.props.list.length,
+      ...newTask,
+      completed: false,
+      user: this.currentUser
+    }
+
+    this.props.postTask(newTaskElement);
+    this.props.fetchTasks();
+  }
+
+  performUpdateTask(udpatedTask) {
+    this.props.putTask(udpatedTask._id, udpatedTask);
   }
 
   render() {
-    const { filterApplied } = this.state;
+    const { filter } = this.state;
     const { list, loading } = this.props;
     return (
       <TodoList
         list={list}
         showLoader={loading}
-        filterApplied={filterApplied}
+        filter={filter}
         toggleTimer={this.toggleTimer}
         toggleListItem={this.toggleListItem}
         performAddTask={this.performAddTask}
+        performUpdateTask={this.performUpdateTask}
       />
     )
   }
@@ -76,7 +82,9 @@ const mapStateToProps = state => {
 
 const mapDispacthToProps = dispatch => {
   return {
-    fetchTasks: () => dispatch(fetchTasks({query: {}}))
+    fetchTasks: () => dispatch(fetchTasks({query: {}})),
+    postTask: (task) => dispatch(postTask({item: task})),
+    putTask: (taskId, task) => dispatch(putTask({taskId: taskId, item: task}))
   }
 }
 

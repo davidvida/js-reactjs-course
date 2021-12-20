@@ -1,63 +1,55 @@
 import React from "react";
 import { IconButton, ListItem, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
-import PlayIcon from '@mui/icons-material/PlayCircleOutlined'
+import PlayIcon from '@mui/icons-material/PlayCircleOutlined';
+import StopIcon from '@mui/icons-material/StopCircleOutlined';
 import CompletedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
 import PendingIcon from '@mui/icons-material/PendingOutlined';
 /* styles import */
 import { withStyles } from "@mui/styles";
 import styles from './styles';
 
-/*
-* class based component
-*/
-// class TodoListItem extends React.Component {
-//   constructor(props) {
-//     super(props);
-//   }
-
-//   render() {
-//     const { name, completed, classes } = this.props;
-//     return (
-//       <ListItem
-//         disablePadding
-//         secondaryAction={
-//           <IconButton edge="end" aria-label="play">
-//             <PlayIcon />
-//           </IconButton>
-//         }
-//       >
-//         <ListItemButton>
-//           <ListItemIcon>
-//             { completed ? <CompletedIcon className={classes.icon} /> : <PendingIcon /> }
-//           </ListItemIcon>
-//           <ListItemText primary={name} />
-//         </ListItemButton>
-//       </ListItem>
-//     )
-//   }
-// }
-
-/*
-* function component
-*/
 import useStyles from "./styles";
 
-const TodoListItem = ({ name, completed }) => {
+const TodoListItem = ({performUpdateTask,item}) => {
   const classes = useStyles();
+
+  const setTime = () => {
+    var completed = item.completed;
+    if (!item.startDate) {
+      var startDate = (new Date()).toISOString();
+    }
+    else if (!item.endDate) {
+      var endDate = (new Date()).toISOString();
+      completed = true;
+    }
+    
+    const udpatedItem = {
+      ...item,
+      startDate: startDate,
+      endDate: endDate,
+      completed: completed
+    }
+    
+    performUpdateTask(udpatedItem);
+  }
+
   return (
     <ListItem
       disablePadding
       secondaryAction={
-        <IconButton edge="end" aria-label="play">
-          <PlayIcon />
+        !item.completed && <IconButton edge="end" aria-label="play" onClick={setTime}>
+          {!item.startDate ? <PlayIcon /> : <StopIcon />}
         </IconButton>
       }
     >
       <ListItemButton>
         <ListItemIcon>
-          { completed ? <CompletedIcon className={classes.icon} /> : <PendingIcon /> }
+          { item.completed ? <CompletedIcon className={classes.icon} /> : <PendingIcon /> }
         </ListItemIcon>
-        <ListItemText primary={name} />
+        <ListItemText primary={item.name} />
+        <ListItemText primary={item.startDate} />
+        <ListItemText primary={item.endDate} />
+        <ListItemText primary={item.label} />
       </ListItemButton>
     </ListItem>
   )
