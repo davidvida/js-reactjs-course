@@ -8,8 +8,10 @@ class TodoListContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      filterApplied: false,
-      hideTimer: false
+      filter: {
+        filterApplied: false,
+        user: this.props.user
+      }
     };
     this.toggleTimer = this.toggleTimer.bind(this);
     this.toggleListItem = this.toggleListItem.bind(this);
@@ -29,9 +31,13 @@ class TodoListContainer extends Component {
   }
 
   toggleListItem(event) {
-    this.setState({
-      filterApplied: event.currentTarget.checked
-    });
+    const toggleChecked = event.currentTarget.checked;
+    this.setState(prevState => ({
+      filter : {
+        ...prevState.filter,
+        filterApplied: toggleChecked
+      }
+    }));
   }
 
   performAddTask(newTask) {
@@ -51,13 +57,13 @@ class TodoListContainer extends Component {
   }
 
   render() {
-    const { filterApplied } = this.state;
+    const { filter } = this.state;
     const { list, loading } = this.props;
     return (
       <TodoList
         list={list}
         showLoader={loading}
-        filterApplied={filterApplied}
+        filter={filter}
         toggleTimer={this.toggleTimer}
         toggleListItem={this.toggleListItem}
         performAddTask={this.performAddTask}
