@@ -47,6 +47,7 @@ const TodoListItem = ({performUpdateTask,item}) => {
           { item.completed ? <CompletedIcon className={classes.icon} /> : <PendingIcon /> }
         </ListItemIcon>
         <ListItemText primary={item.name} />
+        <ListItemText primary={item.description} />
         <ListItemText primary={item.startDate} />
         <ListItemText primary={item.endDate} />
         <ListItemText primary={item.label} />
