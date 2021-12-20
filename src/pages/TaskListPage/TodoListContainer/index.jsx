@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import TodoList from "../TodoList";
 import { connect } from "react-redux";
 import { setLoader } from "../../../actions/ui";
-import { fetchTasks } from "../../../actions/tasks";
+import { fetchTasks,postTask,putTask } from "../../../actions/tasks";
 
 class TodoListContainer extends Component {
   constructor(props) {
@@ -14,10 +14,11 @@ class TodoListContainer extends Component {
     this.toggleTimer = this.toggleTimer.bind(this);
     this.toggleListItem = this.toggleListItem.bind(this);
     this.performAddTask = this.performAddTask.bind(this);
+    this.performUpdateTask = this.performUpdateTask.bind(this);
+    this.currentUser = "joel chambilla"
   }
 
   componentDidMount() {
-    const __this = this;
     this.props.fetchTasks();
   }
 
@@ -34,21 +35,19 @@ class TodoListContainer extends Component {
   }
 
   performAddTask(newTask) {
-    /*Challenge
-    * Create a new command action and the necessary actions and middlewares to manage this process
-    */
-    // this.setState(state => {
-    //   const newTaskElement = {
-    //     ...newTask,
-    //     id: this.propsstate.list.length,
-    //     completed: false
-    //   }
-    //   let newList = [...state.list];
-    //   newList.push(newTaskElement);
-    //   return {
-    //     list: newList
-    //   }
-    // });
+    const newTaskElement = {
+      id: this.props.list.length,
+      ...newTask,
+      completed: false,
+      user: this.currentUser
+    }
+
+    this.props.postTask(newTaskElement);
+    this.props.fetchTasks();
+  }
+
+  performUpdateTask(udpatedTask) {
+    this.props.putTask(udpatedTask._id, udpatedTask);
   }
 
   render() {
@@ -62,6 +61,7 @@ class TodoListContainer extends Component {
         toggleTimer={this.toggleTimer}
         toggleListItem={this.toggleListItem}
         performAddTask={this.performAddTask}
+        performUpdateTask={this.performUpdateTask}
       />
     )
   }
@@ -76,7 +76,9 @@ const mapStateToProps = state => {
 
 const mapDispacthToProps = dispatch => {
   return {
-    fetchTasks: () => dispatch(fetchTasks({query: {}}))
+    fetchTasks: () => dispatch(fetchTasks({query: {}})),
+    postTask: (task) => dispatch(postTask({item: task})),
+    putTask: (taskId, task) => dispatch(putTask({taskId: taskId, item: task}))
   }
 }
 
